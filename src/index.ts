@@ -5,10 +5,7 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 
-import { appendFileSync } from "fs";
 import { giveIonicDefinition } from "./ionic.js";
-
-// Create an MCP server
 
 const server = new Server(
   {
@@ -66,7 +63,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "get_all_ionic_templates",
         description:
-          "A useful tool to get list of available templates for usefull app screens using Ionic elements (all html elements starting with ion-)",
+          "A useful tool to get list of available templates for useful app screens using Ionic elements (all html elements starting with ion-)",
         inputSchema: {
           type: "object",
           properties: {},
@@ -116,7 +113,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { html_tag } = request.params.arguments;
     let result = null;
     try {
-      result = giveIonicDefinition(html_tag);
+      result = `No examples available for ${html_tag}`;
     } catch (e) {
       result = { error: "Failed to read or parse core.json" };
     }
@@ -133,7 +130,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "get_all_ionic_components") {
     let result = null;
     try {
-      result = "No components avaible yet";
+      result = "No components overview available yet";
     } catch (e) {
       result = { error: "Failed to read or parse core.json" };
     }
@@ -169,7 +166,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { template_name } = request.params.arguments;
     let result = null;
     try {
-      result = `No template found for ${template_name}`;
+      result = `No template available for ${template_name}`;
     } catch (e) {
       result = { error: "Failed to get specific template" };
     }
