@@ -1,15 +1,12 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import {
-  McpServer,
-  ResourceTemplate,
-} from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { z } from "zod";
-import { appendFileSync, readFileSync } from "fs";
+
+import { appendFileSync } from "fs";
+import { giveIonicDefinition } from "./ionic.js";
 
 // Create an MCP server
 
@@ -44,7 +41,46 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "get_ionic_component_definition",
         description:
-          "A useful tool to get the component definition of an Ionic component",
+          "A useful tool to get the component definition of an Ionic component (all html elements starting with ion-)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            html_tag: { type: "string" },
+          },
+          required: ["html_tag"],
+        },
+      },
+
+      {
+        name: "get_ionic_component_examples",
+        description:
+          "A useful tool to get example components of Ionic elements (all html elements starting with ion-)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            html_tag: { type: "string" },
+          },
+          required: ["html_tag"],
+        },
+      },
+
+      {
+        name: "get_all_ionic_components",
+        description:
+          "A useful tool to get all Ionic elements (all html elements starting with ion-)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            html_tag: { type: "string" },
+          },
+          required: ["html_tag"],
+        },
+      },
+
+      {
+        name: "get_all_ionic_templates",
+        description:
+          "A useful tool to get templates for usefull app screens using Ionic elements (all html elements starting with ion-)",
         inputSchema: {
           type: "object",
           properties: {
@@ -59,7 +95,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
 // Handle tool execution
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  appendFileSync("log.txt", `Tool request: ${JSON.stringify(request)}\n`);
   if (request.params.name === "calculate_sum") {
     //@ts-ignore
     const { a, b } = request.params.arguments;
@@ -78,10 +113,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { html_tag } = request.params.arguments;
     let result = null;
     try {
-      const coreJson = JSON.parse(readFileSync("core.json", "utf-8"));
-      if (coreJson.components && Array.isArray(coreJson.components)) {
-        result = coreJson.components.find((c: any) => c.tag === html_tag);
-      }
+      result = giveIonicDefinition(html_tag);
     } catch (e) {
       result = { error: "Failed to read or parse core.json" };
     }
@@ -89,7 +121,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       content: [
         {
           type: "text",
-          text: JSON.stringify(result),
+          text: JSON.stringify(result, null, 2),
         },
       ],
     };
@@ -97,7 +129,5 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   throw new Error("Tool not found");
 });
 
-// Start receiving messages on stdin and sending messages on stdout
-appendFileSync("log.txt", `Server started ` + new Date().toISOString() + "\n");
 const transport = new StdioServerTransport();
 await server.connect(transport);
