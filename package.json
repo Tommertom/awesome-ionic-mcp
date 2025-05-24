@@ -11,7 +11,8 @@
     "bin"
   ],
   "scripts": {
-    "build": "tsc ",
+    "build": "tsc",
+    "publish": "npm run build && npm publish",
     "prepare": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
