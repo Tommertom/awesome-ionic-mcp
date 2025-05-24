@@ -5,7 +5,7 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 
-import { giveIonicDefinition } from "./ionic.js";
+import { giveIonicDefinition, giveAllIonicComponents } from "./ionic.js";
 
 const server = new Server(
   {
@@ -63,7 +63,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "get_all_ionic_templates",
         description:
-          "A useful tool to get list of available templates for useful app screens using Ionic elements (all html elements starting with ion-)",
+          "A useful tool to get list of available templates for useful app screens using Ionic elements",
         inputSchema: {
           type: "object",
           properties: {},
@@ -130,7 +130,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "get_all_ionic_components") {
     let result = null;
     try {
-      result = "No components overview available yet";
+      result = giveAllIonicComponents();
     } catch (e) {
       result = { error: "Failed to read or parse core.json" };
     }
@@ -183,5 +183,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   throw new Error("Tool not found");
 });
 
+// iconsole.log(giveAllIonicComponents());
 const transport = new StdioServerTransport();
 await server.connect(transport);

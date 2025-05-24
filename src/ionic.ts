@@ -1,4 +1,5 @@
-import coreJson from "./core.json" with { type: "json" };
+import coreJson from "./data/core.json" with { type: "json" };
+import fs from "fs";
 
 const cleanIonicDefinition = (ionic_core_definition: any) => {
 
@@ -52,4 +53,30 @@ export const giveIonicDefinition = (html_tag: string) => {
     result = coreJson.components.find((c: any) => c.tag === html_tag);
   }
   return cleanIonicDefinition(result);
+};
+
+
+// not really all components
+// https://raw.githubusercontent.com/ionic-team/ionic-docs/refs/heads/main/docs/components.md
+export const giveAllIonicComponents = ()=>{
+  // read the file data/components.md and return the content
+  const fileToRead= "./src/data/components.md";
+
+  console.log('Current working directory:', process.cwd());
+
+  const data = fs.readFileSync(fileToRead, "utf8");
+ 
+  // each component is enclosed in a "<DocsCard header" and "</DocsCard>"  pair
+  const components = data.split("<DocsCard header").slice(1).map((component: string) => {
+    const endIndex = component.indexOf("</DocsCard>");
+    if (endIndex !== -1) {
+      // include the opening and closing tags
+      return `<DocsCard header${component.substring(0, endIndex + "</DocsCard>\n".length)}`;
+    }
+    // fallback: include opening tag if closing not found
+    return `<DocsCard header${component}`;
+  });
+
+  // return as a single string
+  return components.join('');
 };

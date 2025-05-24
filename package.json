@@ -1,17 +1,18 @@
 {
-  "name": "mcp-server",
+  "name": "awesome-ionic-mcp",
   "version": "0.1.0",
   "description": "A Model Context Protocol server example",
-  "private": true,
   "type": "module",
   "bin": {
-    "mcp-server": "./build/index.js"
+    "awesome-ionic-mcp": "./bin/mcp-server.js"
   },
   "files": [
-    "build"
+    "build",
+    "bin"
   ],
   "scripts": {
     "build": "tsc ",
+    "publish": "npm publish --access public",
     "prepare": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
