@@ -1,100 +1,120 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
+  CallToolRequest,
   CallToolRequestSchema,
+  CallToolResult,
   ListToolsRequestSchema,
+  ListToolsResult,
 } from "@modelcontextprotocol/sdk/types.js";
 
-import { giveAllIonicComponents, initIonicData, ionic_data } from "./ionic.js";
+import { ServerTool, ServerToolContext } from "./mcp-utils/tools.js";
+import { availableTools } from "./tools/index.js";
+import { mcpError } from "./mcp-utils/utils.js";
+import {
+  cleanedIonicDefinition,
+  getIonicCoreWithRedirect,
+} from "./tools/coreJson/utils.js";
 
-const server = new Server(
-  {
-    name: "example-server",
-    version: "1.0.0",
-  },
-  {
-    capabilities: {
-      tools: {},
+const SERVER_VERSION = "0.1.0";
+
+export class IonicMCPServer {
+  server: Server;
+  clientInfo?: { name?: string; version?: string };
+
+  ionic_data_context: ServerToolContext = {
+    coreJson: {
+      downloaded_data: {},
+      ionic_component_map: {},
+      version: "",
     },
-  }
-);
-
-// Define available tools
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return {
-    tools: [
-      {
-        name: "get_ionic_component_definition",
-        description:
-          "A useful tool to get the component definition of an Ionic component (all html elements starting with ion-)",
-        inputSchema: {
-          type: "object",
-          properties: {
-            html_tag: { type: "string" },
-          },
-          required: ["html_tag"],
-        },
-      },
-
-      {
-        name: "get_all_ionic_components",
-        description:
-          "A useful tool to get all Ionic elements (all html elements starting with ion-)",
-        inputSchema: {
-          type: "object",
-          properties: {},
-          required: [],
-        },
-      },
-    ],
   };
-});
 
-// Handle tool execution
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  if (request.params.name === "get_ionic_component_definition") {
-    //@ts-ignore
-    const { html_tag } = request.params.arguments;
-    let result = undefined;
+  constructor() {
+    console.log("Ionic MCP Server initialized");
+    this.server = new Server({ name: "ionic", version: SERVER_VERSION });
+    this.server.registerCapabilities({ tools: { listChanged: true } });
+    this.server.setRequestHandler(
+      ListToolsRequestSchema,
+      this.mcpListTools.bind(this)
+    );
+    this.server.setRequestHandler(
+      CallToolRequestSchema,
+      this.mcpCallTool.bind(this)
+    );
+    this.server.oninitialized = async () => {
+      const clientInfo = this.server.getClientVersion();
+      this.clientInfo = clientInfo;
+      console.log(
+        `Ionic MCP Server initialized with client version: ${clientInfo}`
+      );
+    };
+  }
 
-    if (
-      ionic_data.coreJson.components &&
-      ionic_data.ionic_components[html_tag]
-    ) {
-      result = ionic_data.ionic_components[html_tag];
+  getTool(name: string): ServerTool | null {
+    return availableTools().find((t) => t.mcp.name === name) || null;
+  }
+
+  async mcpListTools(): Promise<ListToolsResult> {
+    return {
+      tools: availableTools().map((t) => t.mcp),
+      _meta: {},
+    };
+  }
+
+  async mcpCallTool(request: CallToolRequest): Promise<CallToolResult> {
+    const toolName = request.params.name;
+    const toolArgs = request.params.arguments;
+    const tool = this.getTool(toolName);
+    if (!tool) throw new Error(`Tool '${toolName}' could not be found.`);
+
+    try {
+      const res = await tool.fn(toolArgs, this.ionic_data_context);
+      return res;
+    } catch (err: unknown) {
+      return mcpError(err);
+    }
+  }
+
+  async start(): Promise<void> {
+    const transport = new StdioServerTransport();
+    await this.server.connect(transport);
+  }
+
+  async initIonicData() {
+    console.log("Ionic data init");
+
+    const ionicData = await getIonicCoreWithRedirect(
+      "https://unpkg.com/@ionic/docs/core.json"
+    );
+
+    if (!ionicData) {
+      console.log("Failed to load Ionic data");
+      return;
     }
 
-    return {
-      content: [
-        {
-          type: "text",
-          text: result
-            ? JSON.stringify(result, null, 2)
-            : "Component definition not found",
-        },
-      ],
-    };
+    if (
+      ionicData.coreJson.components &&
+      Array.isArray(ionicData.coreJson.components)
+    ) {
+      const components = ionicData.coreJson.components;
+      this.ionic_data_context.coreJson.ionic_component_map = {};
+      components.forEach((component: any) => {
+        if (component && component.tag) {
+          this.ionic_data_context.coreJson.ionic_component_map[component.tag] =
+            cleanedIonicDefinition(component);
+        }
+      });
+    } else {
+      this.ionic_data_context.coreJson.ionic_component_map = {};
+    }
+
+    this.ionic_data_context.coreJson = ionicData.coreJson;
+    this.ionic_data_context.coreJson.version = ionicData.version;
+    console.log(
+      "Ionic data loaded",
+      this.ionic_data_context.coreJson.version,
+      Object.keys(this.ionic_data_context.coreJson.ionic_component_map).length
+    );
   }
-
-  if (request.params.name === "get_all_ionic_components") {
-    let result = [];
-    result = giveAllIonicComponents();
-    return {
-      content: [
-        {
-          type: "text",
-          text:
-            result.length > 0
-              ? JSON.stringify(result, null, 2)
-              : "No components found",
-        },
-      ],
-    };
-  }
-
-  throw new Error("Tool not found");
-});
-
-initIonicData();
-const transport = new StdioServerTransport();
-await server.connect(transport);
+}
