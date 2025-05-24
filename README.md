@@ -1,5 +1,6 @@
 # Awesome Ionic MCP server
-A first experimental MCP to enhance your LLM coding buddy.
+Your Ionic coding buddy enabled via MCP - build awesome mobile apps using React/Angular/Vue or even Vanilla JS!
+
 
 ## Tools available
 | Tool Name | Feature Group | Description |
