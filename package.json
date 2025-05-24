@@ -18,7 +18,6 @@
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
   },
   "dependencies": {
-    "@ionic/core": "^8.5.7",
     "@modelcontextprotocol/sdk": "^1.11.2"
   },
   "devDependencies": {
