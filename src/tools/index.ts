@@ -11,12 +11,12 @@ export const SERVER_FEATURES = [
 export type ServerFeature = (typeof SERVER_FEATURES)[number];
 
 const tools: Record<ServerFeature, ServerTool[]> = {
-  coreJsonTools: addFeaturePrefix("coreJson", coreJsonTools),
+  coreJsonTools: addFeaturePrefix("@ionic/core.json", coreJsonTools),
   ionic_framework_com: addFeaturePrefix(
-    "ionicFrameworkCom",
+    "ionicframework.com",
     ionic_framework_com
   ),
-  docs_demo_io: addFeaturePrefix("docsDemoIo", docs_demo_io),
+  docs_demo_io: addFeaturePrefix("docs-demo.ionic.io", docs_demo_io),
 };
 
 export function availableTools(activeFeatures?: ServerFeature[]): ServerTool[] {
