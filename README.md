@@ -20,7 +20,7 @@ To configure Claude Desktop to use the Awesome Ionic MCP server, edit the `claud
 ```json
 {
   "mcpServers": {
-    "Ionic": {
+    "awesome-ionic-mcp": {
       "command": "npx",
       "args": ["-y", "awesome-ionic-mcp@latest"]
     }
@@ -37,7 +37,7 @@ To configure Cline to use the Awesome Ionic MCP server, edit the `cline_mcp_sett
 ```json
 {
   "mcpServers": {
-    "Ionic": {
+    "awesome-ionic-mcp": {
       "command": "npx",
       "args": ["-y", "awesome-ionic-mcp@latest"],
       "disabled": false
@@ -55,7 +55,7 @@ To configure Cursor to use the Awesome Ionic MCP server, edit either the file `.
 ```json
 {
   "mcpServers": {
-    "Ionic": {
+    "awesome-ionic-mcp": {
       "command": "npx",
       "args": ["-y", "awesome-ionic-mcp@latest"]
     }
@@ -72,7 +72,7 @@ To configure a single project, edit the `.vscode/mcp.json` file in your workspac
 ```json
 {
   "servers": {
-    "Ionic": {
+    "awesome-ionic-mcp": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "awesome-ionic-mcp@latest"]
@@ -87,7 +87,7 @@ To make the server available in every project you open, edit your user settings:
 {
   "mcp": {
     "servers": {
-      "Ionic": {
+      "awesome-ionic-mcp": {
         "type": "stdio",
         "command": "npx",
         "args": ["-y", "awesome-ionic-mcp@latest"]
@@ -106,7 +106,7 @@ To configure Windsurf Editor, edit the file `~/.codeium/windsurf/mcp_config.json
 ```json
 {
   "mcpServers": {
-    "Ionic": {
+    "awesome-ionic-mcp": {
       "command": "npx",
       "args": ["-y", "awesome-ionic-mcp@latest"]
     }
