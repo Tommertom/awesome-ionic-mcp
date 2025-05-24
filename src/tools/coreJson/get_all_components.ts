@@ -5,7 +5,8 @@ import { mcpError, toContent } from "../../mcp-utils/utils.js";
 export const get_all_ionic_components = tool(
   {
     name: "get_all_ionic_components",
-    description: "Retrieves the definition of all Ionic components.",
+    description:
+      "Retrieves the list of all Ionic components available for this tool",
     inputSchema: z.object({}),
     annotations: {
       title: "Get All Ionic Components",

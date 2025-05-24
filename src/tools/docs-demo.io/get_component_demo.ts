@@ -6,7 +6,7 @@ export const get_component_demo = tool(
   {
     name: "get_component_demo",
     description:
-      "Retrieves the component demo from the official documentation based on its HTML tag.",
+      "Returns the component demo from the GitHub repository based on its HTML tag.",
     inputSchema: z.object({
       html_tag: z
         .string()

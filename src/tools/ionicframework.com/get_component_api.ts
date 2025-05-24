@@ -7,7 +7,7 @@ export const get_component_api = tool(
   {
     name: "get_component_api",
     description:
-      "Retrieves the component API on from the official documentation based on its HTML tag.",
+      "Retrieves the component API on from the IonicFramework page using its HTML tag.",
     inputSchema: z.object({
       html_tag: z
         .string()
