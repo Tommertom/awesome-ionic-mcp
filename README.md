@@ -1,24 +1,20 @@
-# Awesome Awesome Ionic MCP server
+# Awesome Ionic MCP server
 A first experimental MCP to enhance your LLM coding buddy.
 
 ## Tools available
 | Tool Name | Feature Group | Description |
 | --------- | ------------- | ----------- |
-| coreJson_get_ionic_component_definition | coreJson | Retrieves the typescript definition of an Ionic component based on its HTML tag. |
-| coreJson_get_all_ionic_components | coreJson | Retrieves the definition of all Ionic components. |
-| ionicFrameworkCom_get_component_api | ionicFrameworkCom | Retrieves the component API on from the official documentation based on its HTML tag. |
-| docsDemoIo_get_component_demo | docsDemoIo | Retrieves the component demo from the official documentation based on its HTML tag. |
-
+| get_ionic_component_definition | coreJson | Retrieves the typescript definition of an Ionic component based on its HTML tag. |
+| get_all_ionic_components | coreJson | Retrieves the definition of all Ionic components. |
+| get_component_api | ionicFrameworkCom | Retrieves the component API on from the official documentation based on its HTML tag. |
+| get_component_demo | docsDemoIo | Retrieves the component demo from the official documentation based on its HTML tag. |
 ## Getting started
-
 Set up your MCP client  
 The Awesome Ionic MCP server can work with any MCP client that supports standard I/O (stdio) as the transport medium. Here are specific instructions for some popular tools:
 
 ### Basic configuration
 
-
 #### Claude Desktop
-
 To configure Claude Desktop to use the Awesome Ionic MCP server, edit the `claude_desktop_config.json` file. You can open or create this file from the Claude > Settings menu. Select the Developer tab, then click Edit Config.
 
 ```json

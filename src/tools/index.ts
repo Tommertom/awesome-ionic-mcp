@@ -35,7 +35,7 @@ function addFeaturePrefix(feature: string, tools: ServerTool[]): ServerTool[] {
     ...tool,
     mcp: {
       ...tool.mcp,
-      name: `${feature}_${tool.mcp.name}`,
+      name: `${tool.mcp.name}`,
       _meta: {
         ...tool.mcp._meta,
         feature,

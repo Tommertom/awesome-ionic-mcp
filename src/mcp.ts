@@ -32,13 +32,9 @@ export class IonicMCPServer {
 
   constructor() {
     // load all Ionic data
-    this.initIonicData()
-      .then(() => {
-        console.log("Ionic data initialized successfully");
-      })
-      .catch((error) => {
-        console.error("Failed to initialize Ionic data:", error);
-      });
+    this.initIonicData().catch((error) => {
+      console.error("Failed to initialize Ionic data:", error);
+    });
 
     // all MCP related stuff
     this.server = new Server({ name: "ionic", version: SERVER_VERSION });
