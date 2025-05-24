@@ -16,7 +16,6 @@ The Awesome Ionic MCP server can work with any MCP client that supports standard
 
 ### Basic configuration
 
----
 
 #### Claude Desktop
 
