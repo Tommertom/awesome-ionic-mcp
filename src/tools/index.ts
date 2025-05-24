@@ -1,16 +1,25 @@
 import { ServerTool } from "../mcp-utils/tools.js";
 import { coreJsonTools } from "./coreJson/index.js";
+import { docs_demo_io } from "./docs-demo.io/index.js";
+import { ionic_framework_com } from "./ionicframework.com/index.js";
 
-export const SERVER_FEATURES = ["coreJsonTools"] as const;
+export const SERVER_FEATURES = [
+  "coreJsonTools",
+  "ionic_framework_com",
+  "docs_demo_io",
+] as const;
 export type ServerFeature = (typeof SERVER_FEATURES)[number];
 
 const tools: Record<ServerFeature, ServerTool[]> = {
   coreJsonTools: addFeaturePrefix("coreJson", coreJsonTools),
+  ionic_framework_com: addFeaturePrefix(
+    "ionicFrameworkCom",
+    ionic_framework_com
+  ),
+  docs_demo_io: addFeaturePrefix("docsDemoIo", docs_demo_io),
 };
 
-/** availableTools returns the list of MCP tools available  */
 export function availableTools(activeFeatures?: ServerFeature[]): ServerTool[] {
-  // Core tools are always present.
   const toolDefs: ServerTool[] = [];
   if (!activeFeatures?.length) {
     activeFeatures = Object.keys(tools) as ServerFeature[];
@@ -46,9 +55,6 @@ export function markdownDocsOfTools(): string {
 | --------- | ------------- | ----------- |`;
   for (const tool of allTools) {
     let feature = tool.mcp?._meta?.feature || "";
-    if (feature === "firebase") {
-      feature = "core";
-    }
     doc += `
 | ${tool.mcp.name} | ${feature} | ${tool.mcp?.description || ""} |`;
   }

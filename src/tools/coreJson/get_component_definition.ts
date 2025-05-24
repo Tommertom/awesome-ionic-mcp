@@ -6,7 +6,7 @@ export const get_ionic_component_definition = tool(
   {
     name: "get_ionic_component_definition",
     description:
-      "Retrieves the definition of an Ionic component based on its HTML tag.",
+      "Retrieves the typescript definition of an Ionic component based on its HTML tag.",
     inputSchema: z.object({
       html_tag: z
         .string()

@@ -15,6 +15,14 @@ export interface ServerToolContext {
   };
 }
 
+export const emptyServerToolContext: ServerToolContext = {
+  coreJson: {
+    downloaded_data: {},
+    ionic_component_map: {},
+    version: "0.0.0",
+  },
+};
+
 export interface ServerTool<InputSchema extends ZodTypeAny = ZodTypeAny> {
   mcp: {
     name: string;

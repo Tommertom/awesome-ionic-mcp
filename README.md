@@ -1,10 +1,124 @@
-https://github.com/modelcontextprotocol/typescript-sdk
+# Awesome Awesome Ionic MCP server
+A first experimental MCP to enhance your LLM coding buddy.
 
-Change the run path in claude_desktop_config.json
+## Tools available
+| Tool Name | Feature Group | Description |
+| --------- | ------------- | ----------- |
+| coreJson_get_ionic_component_definition | coreJson | Retrieves the typescript definition of an Ionic component based on its HTML tag. |
+| coreJson_get_all_ionic_components | coreJson | Retrieves the definition of all Ionic components. |
+| ionicFrameworkCom_get_component_api | ionicFrameworkCom | Retrieves the component API on from the official documentation based on its HTML tag. |
+| docsDemoIo_get_component_demo | docsDemoIo | Retrieves the component demo from the official documentation based on its HTML tag. |
 
-https://github.com/ionic-team/ionic-docs/blob/main/docs/api/button.md
+## Getting started
 
-https://github.com/ionic-team/ionic-site
+Set up your MCP client  
+The Awesome Ionic MCP server can work with any MCP client that supports standard I/O (stdio) as the transport medium. Here are specific instructions for some popular tools:
 
-# Run it
-https://modelcontextprotocol.io/quickstart/server#node
+### Basic configuration
+
+---
+
+#### Claude Desktop
+
+To configure Claude Desktop to use the Awesome Ionic MCP server, edit the `claude_desktop_config.json` file. You can open or create this file from the Claude > Settings menu. Select the Developer tab, then click Edit Config.
+
+```json
+{
+  "mcpServers": {
+    "Ionic": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"]
+    }
+  }
+}
+```
+
+---
+
+#### Cline
+
+To configure Cline to use the Awesome Ionic MCP server, edit the `cline_mcp_settings.json` file. You can open or create this file by clicking the MCP Servers icon at the top of the Cline pane, then clicking the Configure MCP Servers button.
+
+```json
+{
+  "mcpServers": {
+    "Ionic": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"],
+      "disabled": false
+    }
+  }
+}
+```
+
+---
+
+#### Cursor
+
+To configure Cursor to use the Awesome Ionic MCP server, edit either the file `.cursor/mcp.json` (to configure only a specific project) or the file `~/.cursor/mcp.json` (to make the MCP server available in all projects):
+
+```json
+{
+  "mcpServers": {
+    "Ionic": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"]
+    }
+  }
+}
+```
+
+---
+
+#### Visual Studio Code Copilot
+
+To configure a single project, edit the `.vscode/mcp.json` file in your workspace:
+
+```json
+{
+  "servers": {
+    "Ionic": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"]
+    }
+  }
+}
+```
+
+To make the server available in every project you open, edit your user settings:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "Ionic": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "awesome-ionic-mcp@latest"]
+      }
+    }
+  }
+}
+```
+
+---
+
+#### Windsurf Editor
+
+To configure Windsurf Editor, edit the file `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "Ionic": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"]
+    }
+  }
+}
+```
+
+## Credits
+Credits go to Firebase team- for using their code of their Firebase MCP server.
+https://firebase.google.com/docs/cli/mcp-server
