@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "mcp-server": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["C:\\Data\\src\\ionic-mcp\\build\\index.js"]
-    }
-  }
-}
