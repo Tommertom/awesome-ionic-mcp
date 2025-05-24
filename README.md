@@ -5,9 +5,10 @@ A first experimental MCP to enhance your LLM coding buddy.
 | Tool Name | Feature Group | Description |
 | --------- | ------------- | ----------- |
 | get_ionic_component_definition | coreJson | Retrieves the typescript definition of an Ionic component based on its HTML tag. |
-| get_all_ionic_components | coreJson | Retrieves the definition of all Ionic components. |
-| get_component_api | ionicFrameworkCom | Retrieves the component API on from the official documentation based on its HTML tag. |
-| get_component_demo | docsDemoIo | Retrieves the component demo from the official documentation based on its HTML tag. |
+| get_all_ionic_components | coreJson | Retrieves the list of all Ionic components available for this tool |
+| get_component_api | ionicFrameworkCom | Retrieves the component API on from the IonicFramework page using its HTML tag. |
+| get_component_demo | docsDemoIo | Returns the component demo from the GitHub repository based on its HTML tag. |
+
 ## Getting started
 Set up your MCP client  
 The Awesome Ionic MCP server can work with any MCP client that supports standard I/O (stdio) as the transport medium. Here are specific instructions for some popular tools:
