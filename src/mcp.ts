@@ -31,8 +31,6 @@ export class IonicMCPServer {
   };
 
   constructor() {
-    console.log("Ionic MCP Server initialized");
-
     // load all Ionic data
     this.initIonicData()
       .then(() => {
@@ -56,9 +54,6 @@ export class IonicMCPServer {
     this.server.oninitialized = async () => {
       const clientInfo = this.server.getClientVersion();
       this.clientInfo = clientInfo;
-      console.log(
-        `Ionic MCP Server initialized with client version: ${clientInfo?.version}`
-      );
     };
   }
 
@@ -93,15 +88,17 @@ export class IonicMCPServer {
   }
 
   async initIonicData() {
-    console.log("Ionic data init");
+    return Promise.all([this.loadCoreJSON()]);
+  }
 
+  async loadCoreJSON() {
+    // loading coreData
     const downloadedData = await getIonicCoreWithRedirect(
       "https://unpkg.com/@ionic/docs/core.json"
     );
 
     if (!downloadedData) {
-      console.log("Failed to load Ionic data");
-      return;
+      throw new Error("Failed to download core JSON data from Ionic.");
     }
 
     this.ionic_data_context.coreJson.downloaded_data = downloadedData.coreJson;
@@ -120,10 +117,6 @@ export class IonicMCPServer {
       });
     }
 
-    console.log(
-      "Ionic data loaded",
-      this.ionic_data_context.coreJson.version,
-      Object.keys(this.ionic_data_context.coreJson.ionic_component_map).length
-    );
+    return true;
   }
 }

@@ -15,9 +15,7 @@ export const getIonicCoreWithRedirect = async (
           res.headers.location
         ) {
           // Redirect detected
-          console.log("redirect", res.headers.location);
           const version = extractIonicVersion(res.headers.location);
-          console.log("Version found", version);
           https.get("https://unpkg.com" + res.headers.location, async (res) => {
             try {
               const result = await download(res);
@@ -47,7 +45,6 @@ export function download(res: http.IncomingMessage): Promise<string> {
       data += chunk.toString();
     });
     res.on("end", () => {
-      console.log(`Gotten all data - length ${data.length}`);
       resolve(data);
     });
     res.on("error", (err) => {
@@ -62,7 +59,6 @@ export function extractIonicVersion(url: string) {
 
   if (match) {
     const version = match[1];
-    // console.log(version); // Output: "7.0.3"
     return version;
   } else {
     console.log("No version number found");
