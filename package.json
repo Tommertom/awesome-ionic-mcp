@@ -1,6 +1,6 @@
 {
   "name": "awesome-ionic-mcp",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A Model Context Protocol server for Ionic and Capacitor",
   "type": "module",
   "bin": {
