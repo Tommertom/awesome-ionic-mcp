@@ -5,10 +5,12 @@ Your Ionic coding buddy enabled via MCP - build awesome mobile apps using React/
 ## Tools available
 | Tool Name | Feature Group | Description |
 | --------- | ------------- | ----------- |
-| get_ionic_component_definition | coreJson | Retrieves the typescript definition of an Ionic component based on its HTML tag. |
-| get_all_ionic_components | coreJson | Retrieves the list of all Ionic components available for this tool |
-| get_component_api | ionicFrameworkCom | Retrieves the component API on from the IonicFramework page using its HTML tag. |
-| get_component_demo | docsDemoIo | Returns the component demo from the GitHub repository based on its HTML tag. |
+| get_ionic_component_definition | @ionic/core.json | Retrieves the typescript definition of an Ionic component based on its HTML tag. |
+| get_all_ionic_components | @ionic/core.json | Retrieves the list of all Ionic components available for this tool |
+| get_component_api | ionicframework.com | Retrieves the component API on from the IonicFramework page using its HTML tag. |
+| get_component_demo | docs-demo.ionic.io | Returns the component demo from the GitHub repository based on its HTML tag. |
+| get_official_plugin_api | capacitorjs.com | Retrieves the official plugin API on from the Capacitor page using its HTML tag. |
+| get_all_official_plugins | capacitorjs.com | Retrieves list of all Official Capacitor plugins. |
 
 ## Getting started
 Set up your MCP client  

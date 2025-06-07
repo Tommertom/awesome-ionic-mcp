@@ -2,6 +2,7 @@ import { IonicMCPServer } from "./mcp.js";
 
 // this is a flag to do testing of tools without starting the server
 const doTest = false;
+// console.log(markdownDocsOfTools());
 
 // If we are not testing tools, we start the server
 if (!doTest) {
