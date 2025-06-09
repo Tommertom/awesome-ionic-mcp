@@ -11,6 +11,10 @@ Your Ionic coding buddy enabled via MCP - build awesome mobile apps using React/
 | get_component_demo | docs-demo.ionic.io | Returns the component demo from the GitHub repository based on its HTML tag. |
 | get_official_plugin_api | capacitorjs.com | Retrieves the official plugin API on from the Capacitor page using its HTML tag. |
 | get_all_official_plugins | capacitorjs.com | Retrieves list of all Official Capacitor plugins. |
+| get_all_plugins | capawesome.io | Retrieves list of all Capawesome Capacitor plugins (free and insider versions). |
+| get_all_free_plugins | capawesome.io | Retrieves list of all Capawesome Capacitor free plugins - intensively curated and up-to-date. |
+| get_all_insider_plugins | capawesome.io | Retrieves list of all Capawesome Capacitor insider plugins - intensively curated and up-to-date. |
+| get_plugin_api | capawesome.io | Retrieves API documentation for a specific Capawesome Capacitor plugin. |
 
 ## Getting started
 Set up your MCP client  

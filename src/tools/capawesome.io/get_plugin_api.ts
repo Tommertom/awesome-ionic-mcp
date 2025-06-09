@@ -46,7 +46,7 @@ export const get_plugin_api = tool(
         ],
       },
       {
-        contentPrefix: `API documentation for the Capawesome Capacitor plugin <${plugin.name}>:\n\n`,
+        contentPrefix: `API documentation for the Capawesome Capacitor plugin <${plugin.name}, slug ${plugin.slug}>:\n\n`,
       }
     );
   }

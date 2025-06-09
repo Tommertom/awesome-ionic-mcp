@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { tool } from "../../mcp-utils/tools.js";
-import { toContent } from "../../mcp-utils/utils.js";
+import { toContent, mcpError } from "../../mcp-utils/utils.js";
 
 export const get_all_plugins = tool(
   {
@@ -17,6 +17,12 @@ export const get_all_plugins = tool(
     },
   },
   async ({}, { capawesomeData }) => {
+    if (!capawesomeData || capawesomeData.length === 0) {
+      return mcpError(
+        "No Capawesome plugins data available. The plugin list is empty. Check https://capawesome.io/plugins/ for online plugin information."
+      );
+    }
+
     return toContent(
       {
         plugins: capawesomeData.map((plugin) => ({

@@ -101,17 +101,14 @@ export const loadCoreCapAwesomeData = async (): Promise<CapAwesomePlugin[]> => {
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
-    // console. log all plugins
+    // console log the stats
     console.log(
-      "Loaded CapAwesome plugins:",
-      plugins.map((p) => p.name)
+      `Loaded ${plugins.length} CapAwesome plugins from capawesome.io`
     );
-
-    // show the stats
     console.log(
-      `Total plugins loaded: ${plugins.length} (Insider: ${
+      `Insider plugins: ${
         plugins.filter((p) => p.insider).length
-      })`
+      }, Free plugins: ${plugins.filter((p) => !p.insider).length}`
     );
 
     return plugins;
