@@ -9,7 +9,7 @@ export const get_all_ionic_components = tool(
       "Retrieves the list of all Ionic components available for this tool",
     inputSchema: z.object({}),
     annotations: {
-      title: "Get All Ionic Components",
+      title: "Get All Ionic Components from core.json",
       readOnlyHint: true,
     },
     _meta: {

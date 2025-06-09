@@ -15,7 +15,7 @@ export const get_capacitor_community_plugin_api = tool(
         ),
     }),
     annotations: {
-      title: "Get Official Plugin API Documentation",
+      title: "Get Capacitor Community Plugin API Documentation",
       readOnlyHint: true,
     },
     _meta: {

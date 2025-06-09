@@ -15,7 +15,7 @@ export const get_ionic_component_definition = tool(
         ),
     }),
     annotations: {
-      title: "Get Ionic Component Definition",
+      title: "Get Ionic Component Definition from core.json",
       readOnlyHint: true,
     },
     _meta: {

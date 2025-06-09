@@ -17,7 +17,8 @@ export const get_official_plugin_api = tool(
         ),
     }),
     annotations: {
-      title: "Get Capacitor Official Plugin Information from Official Docs",
+      title:
+        "Get Capacitor Official Plugin Information from Official Docs  using Puppeteer",
       readOnlyHint: true,
     },
     _meta: {

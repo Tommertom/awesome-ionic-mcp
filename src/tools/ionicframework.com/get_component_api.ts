@@ -16,7 +16,8 @@ export const get_component_api = tool(
         ),
     }),
     annotations: {
-      title: "Get Ionic Component Information from Official Docs",
+      title:
+        "Get Ionic Component Information from Official Docs using Puppeteer",
       readOnlyHint: true,
     },
     _meta: {

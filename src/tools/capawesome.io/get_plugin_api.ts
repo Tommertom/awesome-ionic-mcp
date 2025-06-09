@@ -15,7 +15,7 @@ export const get_plugin_api = tool(
         ),
     }),
     annotations: {
-      title: "Get Official Plugin API Documentation",
+      title: "Get Capeawesome Plugin API Documentation",
       readOnlyHint: true,
     },
     _meta: {

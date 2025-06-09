@@ -9,7 +9,7 @@ export const get_all_plugins = tool(
       "Retrieves list of all Capawesome Capacitor plugins (free and insider versions).",
     inputSchema: z.object({}),
     annotations: {
-      title: "Get Official Plugin Information from Official Docs",
+      title: "Get Capeawesome Plugin Information from Official Docs",
       readOnlyHint: true,
     },
     _meta: {

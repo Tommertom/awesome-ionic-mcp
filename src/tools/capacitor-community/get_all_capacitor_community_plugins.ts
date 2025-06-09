@@ -8,7 +8,7 @@ export const get_all_capacitor_community_plugins = tool(
     description: "Retrieves list of all Capacitor Community plugins.",
     inputSchema: z.object({}),
     annotations: {
-      title: "Get Official Plugin Information from Official Docs",
+      title: "Get Capacitor Community Plugin Information from Official Docs",
       readOnlyHint: true,
     },
     _meta: {
