@@ -25,16 +25,23 @@ export const get_plugin_api = tool(
   async ({ plugin_id }, { capawesomeData }) => {
     const plugin = capawesomeData.find((p) => p.slug === plugin_id);
     if (!plugin) {
-      throw new Error(`Plugin not found: ${plugin_id}`);
+      throw new Error(
+        `Plugin not found: ${plugin_id}\n\nList of plugins:\n\n${capawesomeData
+          .map((p) => p.slug)
+          .join("\n")}`
+      );
     }
     return toContent(
       {
-        plugins: [
+        plugin_info: [
           {
             name: plugin.name,
             url: plugin.url,
             slug: plugin.slug,
-            insider: plugin.insider,
+            insider: plugin.insider
+              ? "Insider, please contact support@capawesome.io for a license key if you don't have one."
+              : "Free plugin",
+            api_doc: plugin.api_doc,
           },
         ],
       },
