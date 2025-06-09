@@ -84,7 +84,11 @@ export class IonicMCPServer {
   }
 
   async mcpData() {
-    return Promise.all([this.loadCoreJSON(), this.loadCoreCapAwesomeData()]);
+    return Promise.all([
+      this.loadCoreJSON(),
+      this.loadCoreCapAwesomeData(),
+      this.loadCapacitorCommunityData(),
+    ]);
   }
 
   async loadCoreJSON() {
