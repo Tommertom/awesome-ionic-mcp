@@ -8,13 +8,18 @@ import {
   ListToolsResult,
 } from "@modelcontextprotocol/sdk/types.js";
 
-import { ServerTool, ServerToolContext } from "./mcp-utils/tools.js";
+import {
+  emptyServerToolContext,
+  ServerTool,
+  ServerToolContext,
+} from "./mcp-utils/tools.js";
 import { availableTools } from "./tools/index.js";
 import { mcpError } from "./mcp-utils/utils.js";
 import {
   cleanedIonicDefinition,
   getIonicCoreWithRedirect,
 } from "./tools/coreJson/utils.js";
+import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
 
 const SERVER_VERSION = "0.1.0";
 
@@ -22,18 +27,12 @@ export class IonicMCPServer {
   server: Server;
   clientInfo?: { name?: string; version?: string };
 
-  ionic_data_context: ServerToolContext = {
-    coreJson: {
-      downloaded_data: {},
-      ionic_component_map: {},
-      version: "",
-    },
-  };
+  mcp_data_context: ServerToolContext = { ...emptyServerToolContext };
 
   constructor() {
-    // load all Ionic data
-    this.initIonicData().catch((error) => {
-      console.error("Failed to initialize Ionic data:", error);
+    // load all MCP data
+    this.mcpData().catch((error) => {
+      console.error("Failed to initialize MCP data:", error);
     });
 
     // all MCP related stuff
@@ -71,7 +70,7 @@ export class IonicMCPServer {
     if (!tool) throw new Error(`Tool '${toolName}' could not be found.`);
 
     try {
-      const res = await tool.fn(toolArgs, this.ionic_data_context);
+      const res = await tool.fn(toolArgs, this.mcp_data_context);
       return res;
     } catch (err: unknown) {
       return mcpError(err);
@@ -83,8 +82,8 @@ export class IonicMCPServer {
     await this.server.connect(transport);
   }
 
-  async initIonicData() {
-    return Promise.all([this.loadCoreJSON()]);
+  async mcpData() {
+    return Promise.all([this.loadCoreJSON(), this.loadCoreCapAwesomeData()]);
   }
 
   async loadCoreJSON() {
@@ -97,9 +96,9 @@ export class IonicMCPServer {
       throw new Error("Failed to download core JSON data from Ionic.");
     }
 
-    this.ionic_data_context.coreJson.downloaded_data = downloadedData.coreJson;
-    this.ionic_data_context.coreJson.version = downloadedData.version;
-    this.ionic_data_context.coreJson.ionic_component_map = {};
+    this.mcp_data_context.coreJson.downloaded_data = downloadedData.coreJson;
+    this.mcp_data_context.coreJson.version = downloadedData.version;
+    this.mcp_data_context.coreJson.ionic_component_map = {};
     if (
       downloadedData.coreJson.components &&
       Array.isArray(downloadedData.coreJson.components)
@@ -107,12 +106,17 @@ export class IonicMCPServer {
       const components = downloadedData.coreJson.components;
       components.forEach((component: any) => {
         if (component && component.tag) {
-          this.ionic_data_context.coreJson.ionic_component_map[component.tag] =
+          this.mcp_data_context.coreJson.ionic_component_map[component.tag] =
             cleanedIonicDefinition(component);
         }
       });
     }
 
     return true;
+  }
+
+  async loadCoreCapAwesomeData() {
+    const capawesomeData = await loadCoreCapAwesomeData();
+    this.mcp_data_context.capawesomeData = capawesomeData;
   }
 }

@@ -24,7 +24,7 @@ export const get_official_plugin_api = tool(
       feature: "Capacitor Documentation",
     },
   },
-  async ({ html_tag }, { coreJson }) => {
+  async ({ html_tag }, {}) => {
     if (html_tag === undefined) {
       return mcpError(`No HTML tag supplied in get_plugin_api tool`);
     }

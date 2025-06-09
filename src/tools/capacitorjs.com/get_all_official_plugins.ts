@@ -17,7 +17,7 @@ export const get_all_official_plugins = tool(
       feature: "Capacitor Documentation",
     },
   },
-  async ({}, { coreJson }) => {
+  async ({}, {}) => {
     return toContent({ plugins: available_official_plugins });
   }
 );

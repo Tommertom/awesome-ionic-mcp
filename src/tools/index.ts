@@ -1,5 +1,6 @@
 import { ServerTool } from "../mcp-utils/tools.js";
 import { capacitorjs_com } from "./capacitorjs.com/index.js";
+import { capawesome_io } from "./capawesome.io/index.js";
 import { coreJsonTools } from "./coreJson/index.js";
 import { docs_demo_io } from "./docs-demo.io/index.js";
 import { ionic_framework_com } from "./ionicframework.com/index.js";
@@ -9,6 +10,7 @@ export const SERVER_FEATURES = [
   "ionic_framework_com",
   "docs_demo_io",
   "capacitorjs_com",
+  "capawesome_io",
 ] as const;
 export type ServerFeature = (typeof SERVER_FEATURES)[number];
 
@@ -20,6 +22,7 @@ const tools: Record<ServerFeature, ServerTool[]> = {
   ),
   docs_demo_io: addFeaturePrefix("docs-demo.ionic.io", docs_demo_io),
   capacitorjs_com: addFeaturePrefix("capacitorjs.com", capacitorjs_com),
+  capawesome_io: addFeaturePrefix("capawesome.io", capawesome_io),
 };
 
 export function availableTools(activeFeatures?: ServerFeature[]): ServerTool[] {

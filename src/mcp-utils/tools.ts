@@ -4,6 +4,7 @@ import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z, ZodTypeAny } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { cleanSchema } from "./utils.js";
+import { CapAwesomePlugin } from "../tools/capawesome.io/index.js";
 
 export interface ServerToolContext {
   coreJson: {
@@ -13,6 +14,7 @@ export interface ServerToolContext {
     };
     version: string;
   };
+  capawesomeData: CapAwesomePlugin[];
 }
 
 export const emptyServerToolContext: ServerToolContext = {
@@ -21,6 +23,7 @@ export const emptyServerToolContext: ServerToolContext = {
     ionic_component_map: {},
     version: "0.0.0",
   },
+  capawesomeData: [],
 };
 
 export interface ServerTool<InputSchema extends ZodTypeAny = ZodTypeAny> {

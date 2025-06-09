@@ -59,6 +59,11 @@ export const get_component_api = tool(
     });
     await browser.close();
 
-    return toContent({ api_docs, website_url });
+    return toContent(
+      { api_docs, website_url },
+      {
+        contentPrefix: `API documentation for the Ionic component <${html_tag}> taken from ${website_url}:\n\n`,
+      }
+    );
   }
 );
