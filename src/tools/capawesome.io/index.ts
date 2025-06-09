@@ -2,15 +2,13 @@ import { ServerTool } from "../../mcp-utils/tools.js";
 import { get_all_free_plugins } from "./get_all_free_plugins.js";
 import { get_all_insider_plugins } from "./get_all_insider_plugins.js";
 import { get_all_plugins } from "./get_all_plugins.js";
+import { get_plugin_api } from "./get_plugin_api.js";
 
 export const capawesome_io: ServerTool[] = [
   get_all_plugins,
   get_all_free_plugins,
   get_all_insider_plugins,
-
-  //   get_all_insider_plugins,
-  //   get_all_free_plugins
-  //
+  get_plugin_api,
 ];
 
 export interface CapAwesomePlugin {
@@ -57,6 +55,11 @@ export const loadCoreCapAwesomeData = async (): Promise<CapAwesomePlugin[]> => {
             continue;
           }
 
+          // skip the Plugin with the name "Capacitor ML Kit Plugins"
+          if (name.trim().toLowerCase() === "capacitor ml kit plugins") {
+            continue;
+          }
+
           plugins.push({
             name: name.trim(),
             url: url.trim(),
@@ -97,6 +100,19 @@ export const loadCoreCapAwesomeData = async (): Promise<CapAwesomePlugin[]> => {
       // Add a small delay to avoid overwhelming the server
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
+
+    // console. log all plugins
+    console.log(
+      "Loaded CapAwesome plugins:",
+      plugins.map((p) => p.name)
+    );
+
+    // show the stats
+    console.log(
+      `Total plugins loaded: ${plugins.length} (Insider: ${
+        plugins.filter((p) => p.insider).length
+      })`
+    );
 
     return plugins;
   } catch (error) {

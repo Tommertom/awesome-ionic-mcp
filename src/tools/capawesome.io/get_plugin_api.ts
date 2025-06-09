@@ -8,10 +8,10 @@ export const get_plugin_api = tool(
     description:
       "Retrieves API documentation for a specific Capawesome Capacitor plugin.",
     inputSchema: z.object({
-      plugin_id: z
+      slug: z
         .string()
         .describe(
-          "The slug tag of the Capawesome Capacitor plugin to retrieve. For example, 'android-battery-optimization'."
+          "The slug tag of the Capawesome Capacitor plugin to retrieve based on a slug. For example, 'android-battery-optimization'."
         ),
     }),
     annotations: {
@@ -22,12 +22,12 @@ export const get_plugin_api = tool(
       feature: "Capawesome Documentation",
     },
   },
-  async ({ plugin_id }, { capawesomeData }) => {
-    const plugin = capawesomeData.find((p) => p.slug === plugin_id);
+  async ({ slug }, { capawesomeData }) => {
+    const plugin = capawesomeData.find((p) => p.slug === slug);
     if (!plugin) {
       throw new Error(
-        `Plugin not found: ${plugin_id}\n\nList of plugins:\n\n${capawesomeData
-          .map((p) => p.slug)
+        `Plugin not found: ${slug}\n\nQuery again using the exact slug. List of plugins:\n\n${capawesomeData
+          .map((p) => `- ${p.name} - slug: ${p.slug}`)
           .join("\n")}`
       );
     }
@@ -39,7 +39,7 @@ export const get_plugin_api = tool(
             url: plugin.url,
             slug: plugin.slug,
             insider: plugin.insider
-              ? "Insider, please contact support@capawesome.io for a license key if you don't have one."
+              ? "Insider plugin, please contact support@capawesome.io for a license key if you don't have one."
               : "Free plugin",
             api_doc: plugin.api_doc,
           },
@@ -51,3 +51,6 @@ export const get_plugin_api = tool(
     );
   }
 );
+
+// https://capawesome.io/plugins/barcode-scanning/index.md
+//

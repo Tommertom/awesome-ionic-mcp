@@ -25,13 +25,13 @@ import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
 
 async function runTests() {
   if (doTest) {
-    // await loadCoreCapAwesomeData();
+    await loadCoreCapAwesomeData();
     // console.log("CapAwesome data loaded successfully");
 
     // process.exit(0);
 
     // console.log(markdownDocsOfTools());
-    //  process.exit(0);
+    process.exit(0);
     const toolToTest = get_component_demo;
     console.log("Tool to test:", toolToTest.mcp.name);
     const testInput = {
