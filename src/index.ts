@@ -1,7 +1,7 @@
 import { IonicMCPServer } from "./mcp.js";
 
 // this is a flag to do testing of tools without starting the server
-const doTest = true;
+const doTest = false;
 
 // If we are not testing tools, we start the server
 if (!doTest) {
@@ -19,10 +19,7 @@ if (!doTest) {
 // this block holds the testing code - using npm run start
 import { emptyServerToolContext } from "./mcp-utils/tools.js";
 import { markdownDocsOfTools } from "./tools/index.js";
-import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
-import { get_all_plugins } from "./tools/capawesome.io/get_all_plugins.js";
 import { get_plugin_api } from "./tools/capawesome.io/get_plugin_api.js";
-import { getAllCapacitorCommunityRepos } from "./tools/capacitor-community/index.js";
 
 async function runTests() {
   if (doTest) {
