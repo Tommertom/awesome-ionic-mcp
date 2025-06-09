@@ -1,5 +1,5 @@
 # Awesome Ionic MCP server
-Your Ionic coding buddy enabled via MCP - build awesome mobile apps using React/Angular/Vue or even Vanilla JS!
+Your comprehensive Ionic coding companion powered by the Model Context Protocol (MCP). This intelligent server provides seamless access to Ionic Framework components, Capacitor plugins, and developer resources to accelerate your mobile app development workflow. Whether you're building cross-platform applications with React, Angular, Vue, or Vanilla JavaScript, this MCP server delivers real-time component definitions, API documentation, code examples, and plugin information directly to your AI assistant, enabling faster development and better code quality.
 
 
 ## Tools available
