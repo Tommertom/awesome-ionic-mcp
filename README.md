@@ -1,6 +1,8 @@
 # Awesome Ionic MCP server
 Your comprehensive Ionic coding companion powered by the Model Context Protocol (MCP). This intelligent server provides seamless access to Ionic Framework components, Capacitor plugins, and developer resources to accelerate your mobile app development workflow. Whether you're building cross-platform applications with React, Angular, Vue, or Vanilla JavaScript, this MCP server delivers real-time component definitions, API documentation, code examples, and plugin information directly to your AI assistant, enabling faster development and better code quality.
 
+The server aggregates data from multiple authoritative sources to ensure accuracy and completeness: official Ionic Framework documentation and TypeScript definitions from `@ionic/core`, live API references from ionicframework.com, interactive component demos from docs-demo.ionic.io, official Capacitor plugin documentation from capacitorjs.com, and the comprehensive Capawesome plugin ecosystem from capawesome.io. This multi-source approach guarantees you have access to the most up-to-date and reliable information for your development needs.
+
 
 ## Tools available
 | Tool Name | Feature Group | Description |
