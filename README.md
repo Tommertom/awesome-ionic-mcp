@@ -20,6 +20,7 @@ Data is sourced from the package `@ionic/core`, ionicframework.com, docs-demo.io
 | get_all_capacitor_community_plugins | capacitor-community | Retrieves list of all Capacitor Community plugins. |
 | get_capgo_plugin_api | capgo | Retrieves API documentation for a specific CapGo plugin. |
 | get_all_capgo_plugins | capgo | Retrieves list of all CapGo plugins. |
+| get_all_capacitor_plugins | all-capacitor-plugins | Superlist of all Capacitor plugings from different publishers you can use to retrieve API information through this MCP tool. If you are lost about which plugin to use, this tool will help you find the right one. |
 
 ## Getting started & upfront warning
 The Awesome Ionic MCP server can work with any MCP client that supports standard I/O (stdio) as the transport medium. Here are specific instructions for some popular tools:

@@ -10,7 +10,7 @@ export const get_official_plugin_api = tool(
     description:
       "Retrieves the official plugin API on from the Capacitor page using its HTML tag.",
     inputSchema: z.object({
-      html_tag: z
+      plugin_name: z
         .string()
         .describe(
           "The HTML tag of the Capacitor plugin to retrieve. For example, 'ion-button'."
@@ -25,24 +25,24 @@ export const get_official_plugin_api = tool(
       feature: "Capacitor Documentation",
     },
   },
-  async ({ html_tag }, {}) => {
-    if (html_tag === undefined) {
-      return mcpError(`No HTML tag supplied in get_plugin_api tool`);
+  async ({ plugin_name }, {}) => {
+    if (plugin_name === undefined) {
+      return mcpError(`No plugin name supplied in get_plugin_api tool`);
     }
 
     // trim whitespace and strip the 'ion-' prefix if it exists
-    const tag = html_tag.trim();
+    const name = plugin_name.trim();
 
-    // Check if the tag is in the list of available tags
-    if (!available_official_plugins.includes(tag)) {
+    // Check if the name is in the list of available names
+    if (!available_official_plugins.includes(name)) {
       return mcpError(
-        `The tag '${tag}' is not a valid Capacitor plugin. Available tags: ${available_official_plugins.join(
+        `The plugin '${name}' is not a valid Capacitor plugin. Available plugins: ${available_official_plugins.join(
           ", "
         )}`
       );
     }
 
-    const website_url = `https://capacitorjs.com/docs/apis/${tag}`;
+    const website_url = `https://capacitorjs.com/docs/apis/${name}`;
 
     // Use Puppeteer to get the page content, strip styles/scripts, and return only text
     const browser = await puppeteer.launch({

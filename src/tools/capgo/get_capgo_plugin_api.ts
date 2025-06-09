@@ -10,7 +10,7 @@ export const get_capgo_plugin_api = tool(
       repo_name: z
         .string()
         .describe(
-          "The repo_name tag of the CapGo plugin to retrieve. For example, 'speech-recognition'."
+          "The repo_name tag of the CapGo plugin to retrieve. For example, 'purchases-capacitor'."
         ),
     }),
     annotations: {
