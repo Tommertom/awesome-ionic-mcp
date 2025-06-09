@@ -6,6 +6,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import { cleanSchema } from "./utils.js";
 import { CapAwesomePlugin } from "../tools/capawesome.io/index.js";
 import { CapacitorCommunityPlugin } from "../tools/capacitor-community/index.js";
+import { CapGoPlugin } from "../tools/capgo/index.js";
 
 export interface ServerToolContext {
   coreJson: {
@@ -16,7 +17,8 @@ export interface ServerToolContext {
     version: string;
   };
   capawesomeData: CapAwesomePlugin[];
-  capacitorCommunityData: CapacitorCommunityPlugin[]; // Optional, for future use
+  capacitorCommunityData: CapacitorCommunityPlugin[];
+  capGoData: CapGoPlugin[];
 }
 
 export const emptyServerToolContext: ServerToolContext = {
@@ -27,6 +29,7 @@ export const emptyServerToolContext: ServerToolContext = {
   },
   capawesomeData: [],
   capacitorCommunityData: [],
+  capGoData: [],
 };
 
 export interface ServerTool<InputSchema extends ZodTypeAny = ZodTypeAny> {

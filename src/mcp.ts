@@ -21,6 +21,7 @@ import {
 } from "./tools/coreJson/utils.js";
 import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
 import { getAllCapacitorCommunityRepos } from "./tools/capacitor-community/index.js";
+import { getAllCapGoRepos } from "./tools/capgo/index.js";
 
 const SERVER_VERSION = "0.1.0";
 
@@ -88,6 +89,7 @@ export class IonicMCPServer {
       this.loadCoreJSON(),
       this.loadCoreCapAwesomeData(),
       this.loadCapacitorCommunityData(),
+      this.loadCapGoData(),
     ]);
   }
 
@@ -128,5 +130,9 @@ export class IonicMCPServer {
   async loadCapacitorCommunityData() {
     this.mcp_data_context.capacitorCommunityData =
       await getAllCapacitorCommunityRepos();
+  }
+
+  async loadCapGoData() {
+    this.mcp_data_context.capGoData = await getAllCapGoRepos();
   }
 }

@@ -1,7 +1,7 @@
 import { IonicMCPServer } from "./mcp.js";
 
 // this is a flag to do testing of tools without starting the server
-const doTest = false;
+const doTest = true;
 
 // If we are not testing tools, we start the server
 if (!doTest) {
@@ -27,17 +27,6 @@ import { getAllCapacitorCommunityRepos } from "./tools/capacitor-community/index
 async function runTests() {
   if (doTest) {
     console.log(markdownDocsOfTools());
-
-    try {
-      const repos = await getAllCapacitorCommunityRepos();
-      console.log(`Found ${repos.length} repositories:`);
-      console.log(
-        repos.map((repo) => `- ${repo.name} (${repo.repo_name})`).join("\n")
-      );
-    } catch (err) {
-      console.error("Error fetching repos:", err);
-    }
-
     process.exit(0);
 
     const toolToTest = get_plugin_api;

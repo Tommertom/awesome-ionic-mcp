@@ -5,6 +5,7 @@ import { coreJsonTools } from "./coreJson/index.js";
 import { docs_demo_io } from "./docs-demo.io/index.js";
 import { ionic_framework_com } from "./ionicframework.com/index.js";
 import { capacitor_community_plugins } from "./capacitor-community/index.js";
+import { capgo_plugins } from "./capgo/index.js";
 
 export const SERVER_FEATURES = [
   "coreJsonTools",
@@ -13,6 +14,7 @@ export const SERVER_FEATURES = [
   "capacitorjs_com",
   "capawesome_io",
   "capacitor_community",
+  "capgo",
 ] as const;
 export type ServerFeature = (typeof SERVER_FEATURES)[number];
 
@@ -29,6 +31,7 @@ const tools: Record<ServerFeature, ServerTool[]> = {
     "capacitor-community",
     capacitor_community_plugins
   ),
+  capgo: addFeaturePrefix("capgo", capgo_plugins),
 };
 
 export function availableTools(activeFeatures?: ServerFeature[]): ServerTool[] {
