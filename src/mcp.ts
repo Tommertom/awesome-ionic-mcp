@@ -20,6 +20,7 @@ import {
   getIonicCoreWithRedirect,
 } from "./tools/coreJson/utils.js";
 import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
+import { getAllCapacitorCommunityRepos } from "./tools/capacitor-community/index.js";
 
 const SERVER_VERSION = "0.1.0";
 
@@ -118,5 +119,10 @@ export class IonicMCPServer {
   async loadCoreCapAwesomeData() {
     const capawesomeData = await loadCoreCapAwesomeData();
     this.mcp_data_context.capawesomeData = capawesomeData;
+  }
+
+  async loadCapacitorCommunityData() {
+    this.mcp_data_context.capacitorCommunityData =
+      await getAllCapacitorCommunityRepos();
   }
 }

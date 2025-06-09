@@ -1,0 +1,39 @@
+import { z } from "zod";
+import { tool } from "../../mcp-utils/tools.js";
+import { toContent, mcpError } from "../../mcp-utils/utils.js";
+
+export const get_all_capacitor_community_plugins = tool(
+  {
+    name: "get_all_capacitor_community_plugins",
+    description: "Retrieves list of all Capacitor Community plugins.",
+    inputSchema: z.object({}),
+    annotations: {
+      title: "Get Official Plugin Information from Official Docs",
+      readOnlyHint: true,
+    },
+    _meta: {
+      feature: "Capacitor Community Documentation",
+    },
+  },
+  async ({}, { capacitorCommunityData }) => {
+    if (!capacitorCommunityData || capacitorCommunityData.length === 0) {
+      return mcpError(
+        "No Capacitor Community plugins data available. The plugin list is empty. Check https://github.com/capacitor-community for online plugin information."
+      );
+    }
+
+    return toContent(
+      {
+        plugins: capacitorCommunityData.map((plugin) => ({
+          name: plugin.name,
+          url: plugin.url,
+          repo_name: plugin.repo_name,
+        })),
+      },
+      {
+        contentPrefix:
+          "List of all Capacitor Community Plugins for which also API documentation can be queried via this MCP server\n\n",
+      }
+    );
+  }
+);

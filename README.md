@@ -1,7 +1,7 @@
 # Awesome Ionic MCP server
 Your comprehensive Ionic coding companion powered by the Model Context Protocol (MCP). This intelligent server provides seamless access to Ionic Framework components, Capacitor plugins, and developer resources to accelerate your mobile app development workflow. Whether you're building cross-platform applications with React, Angular, Vue, or Vanilla JavaScript, this MCP server delivers real-time component definitions, API documentation, code examples, and plugin information directly to your AI assistant, enabling faster development and better code quality.
 
-Data is sourced from the package `@ionic/core`, ionicframework.com, docs-demo.ionic.io, capacitorjs.com, and capawesome.io to ensure accuracy and completeness.
+Data is sourced from the package `@ionic/core`, ionicframework.com, docs-demo.ionic.io, capacitorjs.com, capawesome.io, and capacitor-community to ensure accuracy and completeness.
 
 ## Tools available
 | Tool Name | Feature Group | Description |
@@ -16,6 +16,8 @@ Data is sourced from the package `@ionic/core`, ionicframework.com, docs-demo.io
 | get_all_free_plugins | capawesome.io | Retrieves list of all Capawesome Capacitor free plugins - intensively curated and up-to-date. |
 | get_all_insider_plugins | capawesome.io | Retrieves list of all Capawesome Capacitor insider plugins - intensively curated and up-to-date. |
 | get_plugin_api | capawesome.io | Retrieves API documentation for a specific Capawesome Capacitor plugin. |
+| get_capacitor_community_plugin_api | capacitor-community | Retrieves API documentation for a specific Capacitor Community plugin. |
+| get_all_capacitor_community_plugins | capacitor-community | Retrieves list of all Capacitor Community plugins. |
 
 ## Getting started & upfront warning
 The Awesome Ionic MCP server can work with any MCP client that supports standard I/O (stdio) as the transport medium. Here are specific instructions for some popular tools:
