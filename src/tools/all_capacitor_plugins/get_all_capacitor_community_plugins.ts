@@ -36,18 +36,19 @@ ${available_official_plugins.map((plugin) => `- use plugin_name ${plugin}\n`)}
 
 ## CapAwesome Plugins - using get_all_free_plugins tool, get_all_insider_plugins, get_all_plugins, get_plugin_api tools
 ${capawesomeData.map(
-  (plugin) => `- **${plugin.name}**: use slug: ${plugin.slug}`
+  (plugin) => `- **${plugin.name}**: use slug: ${plugin.slug}\n`
 )}
 
 ## CapGo Plugins - using get_capgo_plugin_api tool
 ${capGoData.map(
-  (plugin) => `- **${plugin.name}**: use repo_name: ${plugin.repo_name}`
+  (plugin) => `- **${plugin.name}**: use repo_name: ${plugin.repo_name}\n`
 )}
 
 ## Capacitor Community Plugins - using get_capacitor_community_plugin_api tool
 ${capacitorCommunityData.map(
-  (plugin) => `- **${plugin.name}**: use repo_name: ${plugin.repo_name}`
-)};
+  (plugin) => `- **${plugin.name}**: use repo_name: ${plugin.repo_name}\n`
+)}
+};
     `;
     return toContent({
       result: result,
