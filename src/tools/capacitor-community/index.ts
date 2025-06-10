@@ -44,6 +44,10 @@ export async function getAllCapacitorCommunityRepos(): Promise<
     if (repos.length === 0) break;
 
     allRepos = allRepos.concat(repos);
+
+    // wait 100ms to avoid hitting rate limits
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     page++;
   }
 

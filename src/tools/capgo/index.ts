@@ -42,14 +42,19 @@ export async function getAllCapGoRepos(): Promise<CapGoPlugin[]> {
     if (repos.length === 0) break;
 
     allRepos = allRepos.concat(repos);
+
+    // wait 100ms to avoid hitting rate limits
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     page++;
   }
 
-  const plugins: CapGoPlugin[] = [];
-  const plugins_to_skip = [".github", "auth0", "welcome"];
+  // we need to keep only the plugins that start with "capacitor-"
+  allRepos = allRepos.filter((repo) => repo.name.startsWith("capacitor-"));
 
+  const plugins: CapGoPlugin[] = [];
   for (const repo of allRepos) {
-    if (repo.archived || repo.disabled || plugins_to_skip.includes(repo.name)) {
+    if (repo.archived || repo.disabled) {
       continue;
     }
 

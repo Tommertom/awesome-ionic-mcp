@@ -19,9 +19,12 @@ import {
   cleanedIonicDefinition,
   getIonicCoreWithRedirect,
 } from "./tools/coreJson/utils.js";
+import { loadIonicCoreJSON } from "./tools/coreJson/index.js";
 import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
 import { getAllCapacitorCommunityRepos } from "./tools/capacitor-community/index.js";
 import { getAllCapGoRepos } from "./tools/capgo/index.js";
+import { available_official_capacitor_plugins } from "./tools/capacitorjs.com/official_plugins.js";
+import { loadOfficialCapacitorPlugins } from "./tools/capacitorjs.com/index.js";
 
 const SERVER_VERSION = "0.1.0";
 
@@ -32,11 +35,6 @@ export class IonicMCPServer {
   mcp_data_context: ServerToolContext = { ...emptyServerToolContext };
 
   constructor() {
-    // load all MCP data
-    this.mcpData().catch((error) => {
-      console.error("Failed to initialize MCP data:", error);
-    });
-
     // all MCP related stuff
     this.server = new Server({ name: "ionic", version: SERVER_VERSION });
     this.server.registerCapabilities({ tools: { listChanged: true } });
@@ -52,6 +50,11 @@ export class IonicMCPServer {
       const clientInfo = this.server.getClientVersion();
       this.clientInfo = clientInfo;
     };
+
+    // load all MCP data
+    this.mcpData().catch((error) => {
+      console.error("Failed to initialize MCP data:", error);
+    });
   }
 
   getTool(name: string): ServerTool | null {
@@ -90,34 +93,20 @@ export class IonicMCPServer {
       this.loadCoreCapAwesomeData(),
       this.loadCapacitorCommunityData(),
       this.loadCapGoData(),
+      this.loadCoreCapacitorJSData(),
     ]);
   }
 
+  async loadCoreCapacitorJSData() {
+    loadOfficialCapacitorPlugins();
+  }
   async loadCoreJSON() {
-    // loading coreData
-    const downloadedData = await getIonicCoreWithRedirect(
-      "https://unpkg.com/@ionic/docs/core.json"
-    );
+    const coreData = await loadIonicCoreJSON();
 
-    if (!downloadedData) {
-      throw new Error("Failed to download core JSON data from Ionic.");
-    }
-
-    this.mcp_data_context.coreJson.downloaded_data = downloadedData.coreJson;
-    this.mcp_data_context.coreJson.version = downloadedData.version;
-    this.mcp_data_context.coreJson.ionic_component_map = {};
-    if (
-      downloadedData.coreJson.components &&
-      Array.isArray(downloadedData.coreJson.components)
-    ) {
-      const components = downloadedData.coreJson.components;
-      components.forEach((component: any) => {
-        if (component && component.tag) {
-          this.mcp_data_context.coreJson.ionic_component_map[component.tag] =
-            cleanedIonicDefinition(component);
-        }
-      });
-    }
+    this.mcp_data_context.coreJson.downloaded_data = coreData.downloaded_data;
+    this.mcp_data_context.coreJson.version = coreData.version;
+    this.mcp_data_context.coreJson.ionic_component_map =
+      coreData.ionic_component_map;
 
     return true;
   }

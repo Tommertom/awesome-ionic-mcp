@@ -2,7 +2,7 @@ import { z } from "zod";
 import { tool } from "../../mcp-utils/tools.js";
 import { toContent } from "../../mcp-utils/utils.js";
 
-import { available_official_plugins } from "./official_plugins.js";
+import { available_official_capacitor_plugins } from "./official_plugins.js";
 
 export const get_all_official_plugins = tool(
   {
@@ -18,6 +18,6 @@ export const get_all_official_plugins = tool(
     },
   },
   async ({}, {}) => {
-    return toContent({ plugins: available_official_plugins });
+    return toContent({ plugins: available_official_capacitor_plugins });
   }
 );

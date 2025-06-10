@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { tool } from "../../mcp-utils/tools.js";
 import { toContent, mcpError } from "../../mcp-utils/utils.js";
-import { available_official_plugins } from "../capacitorjs.com/official_plugins.js";
+import { available_official_capacitor_plugins } from "../capacitorjs.com/official_plugins.js";
 
 export const get_all_capacitor_plugins = tool(
   {
@@ -19,7 +19,7 @@ export const get_all_capacitor_plugins = tool(
   },
   async ({}, { capawesomeData, capGoData, capacitorCommunityData }) => {
     if (
-      available_official_plugins.length === 0 &&
+      available_official_capacitor_plugins.length === 0 &&
       capawesomeData.length === 0 &&
       capGoData.length === 0 &&
       capacitorCommunityData.length === 0
@@ -31,8 +31,16 @@ export const get_all_capacitor_plugins = tool(
 
     const result = `List of all Capacitor Plugins and how to get them using this MCP server\n\n
 
+The MCP server provides info on Capacitor plugins from the following sources:
+- Official Capacitor plugins from capacitorjs.com
+- CapAwesome plugins from capawesome.io
+- CapGo plugins from capgo.io
+- Capacitor Community plugins from capacitor-community.github.io
+
 ## Official Plugins - using get_official_plugin_api and get_all_official_plugins tools
-${available_official_plugins.map((plugin) => `- use plugin_name ${plugin}\n`)}
+${available_official_capacitor_plugins.map(
+  (plugin) => `- use plugin_name ${plugin}\n`
+)}
 
 ## CapAwesome Plugins - using get_all_free_plugins tool, get_all_insider_plugins, get_all_plugins, get_plugin_api tools
 ${capawesomeData.map(

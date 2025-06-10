@@ -2,7 +2,7 @@ import { z } from "zod";
 import { tool } from "../../mcp-utils/tools.js";
 import { mcpError, toContent } from "../../mcp-utils/utils.js";
 import puppeteer from "puppeteer";
-import { available_official_plugins } from "./official_plugins.js";
+import { available_official_capacitor_plugins } from "./official_plugins.js";
 
 export const get_official_plugin_api = tool(
   {
@@ -34,9 +34,9 @@ export const get_official_plugin_api = tool(
     const name = plugin_name.trim();
 
     // Check if the name is in the list of available names
-    if (!available_official_plugins.includes(name)) {
+    if (!available_official_capacitor_plugins.includes(name)) {
       return mcpError(
-        `The plugin '${name}' is not a valid Capacitor plugin. Available plugins: ${available_official_plugins.join(
+        `The plugin '${name}' is not a valid Capacitor plugin. Available plugins: ${available_official_capacitor_plugins.join(
           ", "
         )}`
       );

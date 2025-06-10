@@ -1,4 +1,4 @@
-export const available_official_plugins = [
+export const available_official_capacitor_plugins = [
   "action-sheet",
   "app-launcher",
   "app",
