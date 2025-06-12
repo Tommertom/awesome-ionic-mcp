@@ -55,9 +55,9 @@ export class IonicMCPServer {
     });
 
     // setup the live viewer
-    this.setLiveViewer("on").catch((error) => {
-      console.error("Failed to set up live viewer:", error);
-    });
+    // this.setLiveViewer("on").catch((error) => {
+    //   console.error("Failed to set up live viewer:", error);
+    // });
   }
 
   async setLiveViewer(

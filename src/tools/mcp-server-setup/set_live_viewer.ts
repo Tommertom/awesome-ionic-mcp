@@ -7,7 +7,7 @@ export const set_live_viewer = tool(
   {
     name: "set_live_viewer",
     description:
-      "Sets the live viewer for the MCP server to show the browser for viewing the documentation that is used by the MCP server.",
+      "Switches on/off the live viewer for the MCP server to show the browser for viewing the documentation that is used by the MCP server.",
     inputSchema: z.object({
       on_off: z
         .enum(["on", "off"])
@@ -32,7 +32,13 @@ export const set_live_viewer = tool(
         return mcpError(`Live viewer is already set.`);
       }
       liveViewer.puppeteerBrowser = await get_live_viewer_puppeteerBrowser();
+
+      const page = await liveViewer.puppeteerBrowser.newPage();
       liveViewer.lastURL = "https://google.com";
+
+      await page.goto(liveViewer.lastURL, {
+        waitUntil: "networkidle0",
+      });
     } else {
       if (!liveViewer.puppeteerBrowser) {
         return mcpError(`Live viewer is not set.`);
