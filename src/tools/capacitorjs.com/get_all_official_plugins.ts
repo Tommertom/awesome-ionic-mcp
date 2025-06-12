@@ -17,7 +17,16 @@ export const get_all_official_plugins = tool(
       feature: "Capacitor Documentation",
     },
   },
-  async ({}, {}) => {
+  async ({}, { liveViewer }) => {
+    if (liveViewer.puppeteerPage) {
+      const url = "https://capacitorjs.com/docs/apis";
+      const page = liveViewer.puppeteerPage;
+      await page.goto(url, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = url;
+    }
+
     return toContent({ plugins: available_official_capacitor_plugins });
   }
 );

@@ -16,11 +16,20 @@ export const get_all_free_plugins = tool(
       feature: "Capawesome Documentation",
     },
   },
-  async ({}, { capawesomeData }) => {
+  async ({}, { capawesomeData, liveViewer }) => {
     if (!capawesomeData || capawesomeData.length === 0) {
       return mcpError(
         "No Capawesome plugins data available. The plugin list is empty. Check https://capawesome.io/plugins/ for online plugin information."
       );
+    }
+
+    if (liveViewer.puppeteerPage) {
+      const url = "https://capawesome.io/plugins/";
+      const page = liveViewer.puppeteerPage;
+      await page.goto(url, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = url;
     }
 
     return toContent(

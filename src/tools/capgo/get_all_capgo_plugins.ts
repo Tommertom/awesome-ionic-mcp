@@ -15,11 +15,20 @@ export const get_all_capgo_plugins = tool(
       feature: "CapGo Documentation",
     },
   },
-  async ({}, { capGoData }) => {
+  async ({}, { capGoData, liveViewer }) => {
     if (!capGoData || capGoData.length === 0) {
       return mcpError(
         "No Capacitor Community plugins data available. The plugin list is empty. Check https://github.com/capacitor-community for online plugin information."
       );
+    }
+
+    if (liveViewer.puppeteerPage) {
+      const url = "https://capgo.app/plugins/";
+      const page = liveViewer.puppeteerPage;
+      await page.goto(url, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = url;
     }
 
     return toContent(

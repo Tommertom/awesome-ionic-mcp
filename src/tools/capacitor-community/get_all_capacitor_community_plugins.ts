@@ -15,11 +15,20 @@ export const get_all_capacitor_community_plugins = tool(
       feature: "Capacitor Community Documentation",
     },
   },
-  async ({}, { capacitorCommunityData }) => {
+  async ({}, { capacitorCommunityData, liveViewer }) => {
     if (!capacitorCommunityData || capacitorCommunityData.length === 0) {
       return mcpError(
         "No Capacitor Community plugins data available. The plugin list is empty. Check https://github.com/capacitor-community for online plugin information."
       );
+    }
+
+    if (liveViewer.puppeteerPage) {
+      const url = "https://github.com/capacitor-community";
+      const page = liveViewer.puppeteerPage;
+      await page.goto(url, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = url;
     }
 
     return toContent(
