@@ -7,6 +7,7 @@ import { cleanSchema } from "./utils.js";
 import { CapAwesomePlugin } from "../tools/capawesome.io/index.js";
 import { CapacitorCommunityPlugin } from "../tools/capacitor-community/index.js";
 import { CapGoPlugin } from "../tools/capgo/index.js";
+import puppeteer from "puppeteer";
 
 export interface ServerToolContext {
   coreJson: {
@@ -19,6 +20,10 @@ export interface ServerToolContext {
   capawesomeData: CapAwesomePlugin[];
   capacitorCommunityData: CapacitorCommunityPlugin[];
   capGoData: CapGoPlugin[];
+  liveViewer: {
+    puppeteerBrowser: any | undefined;
+    lastURL: string | undefined;
+  };
 }
 
 export const emptyServerToolContext: ServerToolContext = {
@@ -30,6 +35,10 @@ export const emptyServerToolContext: ServerToolContext = {
   capawesomeData: [],
   capacitorCommunityData: [],
   capGoData: [],
+  liveViewer: {
+    puppeteerBrowser: undefined,
+    lastURL: undefined,
+  },
 };
 
 export interface ServerTool<InputSchema extends ZodTypeAny = ZodTypeAny> {

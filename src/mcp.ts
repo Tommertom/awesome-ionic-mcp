@@ -15,16 +15,14 @@ import {
 } from "./mcp-utils/tools.js";
 import { availableTools } from "./tools/index.js";
 import { mcpError } from "./mcp-utils/utils.js";
-import {
-  cleanedIonicDefinition,
-  getIonicCoreWithRedirect,
-} from "./tools/coreJson/utils.js";
+
 import { loadIonicCoreJSON } from "./tools/coreJson/index.js";
 import { loadCoreCapAwesomeData } from "./tools/capawesome.io/index.js";
 import { getAllCapacitorCommunityRepos } from "./tools/capacitor-community/index.js";
 import { getAllCapGoRepos } from "./tools/capgo/index.js";
-import { available_official_capacitor_plugins } from "./tools/capacitorjs.com/official_plugins.js";
+
 import { loadOfficialCapacitorPlugins } from "./tools/capacitorjs.com/index.js";
+import { get_live_viewer_puppeteerBrowser } from "./tools/mcp-server-setup/set_live_viewer.js";
 
 const SERVER_VERSION = "0.1.0";
 
@@ -55,6 +53,32 @@ export class IonicMCPServer {
     this.mcpData().catch((error) => {
       console.error("Failed to initialize MCP data:", error);
     });
+
+    // setup the live viewer
+    this.setLiveViewer("on").catch((error) => {
+      console.error("Failed to set up live viewer:", error);
+    });
+  }
+
+  async setLiveViewer(
+    on_off: "on" | "off",
+    url: string = "https://google.com"
+  ) {
+    if (on_off === "on") {
+      this.mcp_data_context.liveViewer = {
+        puppeteerBrowser: await get_live_viewer_puppeteerBrowser(),
+        lastURL: url,
+      };
+
+      this.mcp_data_context.liveViewer.puppeteerBrowser.page.goto(url, {
+        waitUntil: "networkidle0",
+      });
+    } else {
+      this.mcp_data_context.liveViewer = {
+        puppeteerBrowser: undefined,
+        lastURL: undefined,
+      };
+    }
   }
 
   getTool(name: string): ServerTool | null {

@@ -7,6 +7,7 @@ import { ionic_framework_com } from "./ionicframework.com/index.js";
 import { capacitor_community_plugins } from "./capacitor-community/index.js";
 import { capgo_plugins } from "./capgo/index.js";
 import { all_capacitor_plugins } from "./all_capacitor_plugins/index.js";
+import { mcp_server_setup } from "./mcp-server-setup/index.js";
 
 export const SERVER_FEATURES = [
   "coreJsonTools",
@@ -17,6 +18,7 @@ export const SERVER_FEATURES = [
   "capacitor_community",
   "capgo",
   "all_capacitor_plugins",
+  "mcp_server_setup",
 ] as const;
 export type ServerFeature = (typeof SERVER_FEATURES)[number];
 
@@ -38,6 +40,7 @@ const tools: Record<ServerFeature, ServerTool[]> = {
     "all-capacitor-plugins",
     all_capacitor_plugins
   ),
+  mcp_server_setup: addFeaturePrefix("mcp-server-setup", mcp_server_setup),
 };
 
 export function availableTools(activeFeatures?: ServerFeature[]): ServerTool[] {
