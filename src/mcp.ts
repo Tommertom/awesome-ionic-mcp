@@ -70,7 +70,10 @@ export class IonicMCPServer {
         lastURL: url,
       };
 
-      this.mcp_data_context.liveViewer.puppeteerBrowser.page.goto(url, {
+      const page =
+        await this.mcp_data_context.liveViewer.puppeteerBrowser.newPage();
+
+      await page.goto(url, {
         waitUntil: "networkidle0",
       });
     } else {
