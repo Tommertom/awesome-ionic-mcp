@@ -53,35 +53,6 @@ export class IonicMCPServer {
     this.mcpData().catch((error) => {
       console.error("Failed to initialize MCP data:", error);
     });
-
-    // setup the live viewer
-    // this.setLiveViewer("on").catch((error) => {
-    //   console.error("Failed to set up live viewer:", error);
-    // });
-  }
-
-  async setLiveViewer(
-    on_off: "on" | "off",
-    url: string = "https://google.com"
-  ) {
-    if (on_off === "on") {
-      this.mcp_data_context.liveViewer = {
-        puppeteerBrowser: await get_live_viewer_puppeteerBrowser(),
-        lastURL: url,
-      };
-
-      const page =
-        await this.mcp_data_context.liveViewer.puppeteerBrowser.newPage();
-
-      await page.goto(url, {
-        waitUntil: "networkidle0",
-      });
-    } else {
-      this.mcp_data_context.liveViewer = {
-        puppeteerBrowser: undefined,
-        lastURL: undefined,
-      };
-    }
   }
 
   getTool(name: string): ServerTool | null {

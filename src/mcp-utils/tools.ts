@@ -21,7 +21,7 @@ export interface ServerToolContext {
   capacitorCommunityData: CapacitorCommunityPlugin[];
   capGoData: CapGoPlugin[];
   liveViewer: {
-    puppeteerBrowser: any | undefined;
+    puppeteerPage: puppeteer.Page | undefined;
     lastURL: string | undefined;
   };
 }
@@ -36,7 +36,7 @@ export const emptyServerToolContext: ServerToolContext = {
   capacitorCommunityData: [],
   capGoData: [],
   liveViewer: {
-    puppeteerBrowser: undefined,
+    puppeteerPage: undefined,
     lastURL: undefined,
   },
 };

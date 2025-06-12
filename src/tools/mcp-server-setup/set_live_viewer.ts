@@ -28,23 +28,25 @@ export const set_live_viewer = tool(
 
     // Check if the live viewer is already set
     if (on_off === "on") {
-      if (liveViewer.puppeteerBrowser) {
+      if (liveViewer.puppeteerPage) {
         return mcpError(`Live viewer is already set.`);
       }
-      liveViewer.puppeteerBrowser = await get_live_viewer_puppeteerBrowser();
+      const browser = await get_live_viewer_puppeteerBrowser();
+      if (!browser) {
+        return mcpError(`Failed to launch Puppeteer browser for live viewer.`);
+      }
+      liveViewer.puppeteerPage = await browser.newPage();
 
-      const page = await liveViewer.puppeteerBrowser.newPage();
       liveViewer.lastURL = "https://google.com";
-
-      await page.goto(liveViewer.lastURL, {
+      await liveViewer.puppeteerPage.goto(liveViewer.lastURL, {
         waitUntil: "networkidle0",
       });
     } else {
-      if (!liveViewer.puppeteerBrowser) {
+      if (!liveViewer.puppeteerPage) {
         return mcpError(`Live viewer is not set.`);
       }
-      await liveViewer.puppeteerBrowser.close();
-      liveViewer.puppeteerBrowser = undefined;
+      await liveViewer.puppeteerPage.close();
+      liveViewer.puppeteerPage = undefined;
       liveViewer.lastURL = undefined;
     }
 

@@ -21,7 +21,7 @@ export const get_capgo_plugin_api = tool(
       feature: "CapGo Documentation",
     },
   },
-  async ({ repo_name }, { capGoData }) => {
+  async ({ repo_name }, { capGoData, liveViewer }) => {
     const plugin = capGoData.find((p) => p.repo_name === repo_name);
     if (!plugin) {
       throw new Error(
@@ -29,6 +29,15 @@ export const get_capgo_plugin_api = tool(
           .map((p) => `- ${p.name} - repo_name: ${p.repo_name}`)
           .join("\n")}`
       );
+    }
+
+    // if liveViewer is set, open the plugin's API documentation in a new page
+    if (liveViewer.puppeteerPage) {
+      const page = liveViewer.puppeteerPage;
+      await page.goto(plugin.api_doc, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = plugin.api_doc;
     }
     return toContent(
       {
