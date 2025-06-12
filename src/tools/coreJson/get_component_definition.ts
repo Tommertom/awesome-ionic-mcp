@@ -22,7 +22,7 @@ export const get_ionic_component_definition = tool(
       feature: "Core JSON based tools",
     },
   },
-  async ({ html_tag }, { coreJson }) => {
+  async ({ html_tag }, { coreJson, liveViewer }) => {
     if (html_tag === undefined) {
       return mcpError(
         `No HTML tag supplied in get_ionic_component_definition tool`
@@ -32,6 +32,17 @@ export const get_ionic_component_definition = tool(
     if (!component) {
       return mcpError(`Component not found: ${html_tag}`);
     }
+
+    // if liveViewer is set, open the plugin's API documentation in a new page
+    const url = `https://ionicframework.com/docs/api/${html_tag}`;
+    if (liveViewer.puppeteerPage) {
+      const page = liveViewer.puppeteerPage;
+      await page.goto(url, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = url;
+    }
+
     return toContent({ component });
   }
 );

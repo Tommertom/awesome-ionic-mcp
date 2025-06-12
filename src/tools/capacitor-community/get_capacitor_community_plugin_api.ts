@@ -22,7 +22,7 @@ export const get_capacitor_community_plugin_api = tool(
       feature: "Capacitor Community Documentation",
     },
   },
-  async ({ repo_name }, { capacitorCommunityData }) => {
+  async ({ repo_name }, { capacitorCommunityData, liveViewer }) => {
     const plugin = capacitorCommunityData.find(
       (p) => p.repo_name === repo_name
     );
@@ -33,6 +33,16 @@ export const get_capacitor_community_plugin_api = tool(
           .join("\n")}`
       );
     }
+
+    // if liveViewer is set, open the plugin's API documentation in a new page
+    if (liveViewer.puppeteerPage) {
+      const page = liveViewer.puppeteerPage;
+      await page.goto(plugin.api_doc, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = plugin.api_doc;
+    }
+
     return toContent(
       {
         plugin_info: [

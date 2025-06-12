@@ -22,7 +22,7 @@ export const get_plugin_api = tool(
       feature: "Capawesome Documentation",
     },
   },
-  async ({ slug }, { capawesomeData }) => {
+  async ({ slug }, { capawesomeData, liveViewer }) => {
     const plugin = capawesomeData.find((p) => p.slug === slug);
     if (!plugin) {
       throw new Error(
@@ -31,6 +31,16 @@ export const get_plugin_api = tool(
           .join("\n")}`
       );
     }
+
+    // if liveViewer is set, open the plugin's API documentation in a new page
+    if (liveViewer.puppeteerPage) {
+      const page = liveViewer.puppeteerPage;
+      await page.goto(plugin.api_doc, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = plugin.api_doc;
+    }
+
     return toContent(
       {
         plugin_info: [

@@ -22,7 +22,7 @@ export const get_component_demo = tool(
       feature: "Ionic Kitchen Sink App",
     },
   },
-  async ({ html_tag }, { coreJson }) => {
+  async ({ html_tag }, { liveViewer }) => {
     if (html_tag === undefined) {
       return mcpError(`No HTML tag supplied in get_component_demo tool`);
     }
@@ -43,6 +43,16 @@ export const get_component_demo = tool(
       );
     }
     const demo_code = await response.text();
+
+    // if liveViewer is set, open the plugin's API documentation in a new page
+    if (liveViewer.puppeteerPage) {
+      const page = liveViewer.puppeteerPage;
+      await page.goto(demo_url, {
+        waitUntil: "networkidle0",
+      });
+      liveViewer.lastURL = demo_url;
+    }
+
     return toContent({ demo_code, stencil_code_url, demo_url });
   }
 );
