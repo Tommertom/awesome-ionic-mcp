@@ -25,7 +25,7 @@ export const get_official_plugin_api = tool(
       feature: "Capacitor Documentation",
     },
   },
-  async ({ plugin_name }, {}) => {
+  async ({ plugin_name }, { liveViewer }) => {
     if (plugin_name === undefined) {
       return mcpError(`No plugin name supplied in get_plugin_api tool`);
     }
@@ -44,16 +44,23 @@ export const get_official_plugin_api = tool(
 
     const website_url = `https://capacitorjs.com/docs/apis/${name}`;
 
-    // Use Puppeteer to get the page content, strip styles/scripts, and return only text
-    const browser = await puppeteer.launch({
-      headless: false,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    const page = await browser.newPage();
-    await page.goto(website_url, { waitUntil: "networkidle0" });
+    // if liveViewer is set, open the plugin's API documentation in a that page
+    let puppeteerPage = undefined;
+    if (liveViewer.puppeteerPage) {
+      puppeteerPage = liveViewer.puppeteerPage;
+      liveViewer.lastURL = website_url;
+    } else {
+      const browser = await puppeteer.launch({
+        headless: false,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      });
+      const page = await browser.newPage();
+      puppeteerPage = page;
+    }
+    await puppeteerPage.goto(website_url, { waitUntil: "networkidle0" });
 
     // Remove all stylesheets and scripts, then get only the visible text from the main doc content
-    const api_docs = await page.evaluate(() => {
+    const api_docs = await puppeteerPage.evaluate(() => {
       // Remove <style> and <script> tags
       document.querySelectorAll("style, script").forEach((el) => el.remove());
       // Remove <link rel="stylesheet">
@@ -67,7 +74,11 @@ export const get_official_plugin_api = tool(
       // Concatenate their innerText
       return docDivs.map((div) => (div as HTMLElement).innerText).join("\n\n");
     });
-    await browser.close();
+
+    if (!liveViewer.puppeteerPage) {
+      // If we opened a new browser, close it
+      await puppeteerPage.close();
+    }
 
     return toContent({ api_docs, website_url });
   }
