@@ -11,8 +11,10 @@ export const capacitorjs_com: ServerTool[] = [
 export const loadOfficialCapacitorPlugins = async () => {
   // console log only the stats for available_official_capacitor_plugins
   setTimeout(() => {
-    console.log(
-      `Loaded ${available_official_capacitor_plugins.length} official Capacitor plugins`
-    );
+    if (process.env.MCP_QUIET !== "true") {
+      console.error(
+        `Loaded ${available_official_capacitor_plugins.length} official Capacitor plugins`
+      );
+    }
   }, 1000);
 };

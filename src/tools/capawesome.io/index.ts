@@ -102,13 +102,15 @@ export const loadCoreCapAwesomeData = async (): Promise<CapAwesomePlugin[]> => {
     }
 
     // console log the stats
-    console.log(
-      `Loaded ${
-        plugins.length
-      } CapAwesome plugins from capawesome.io. Insider plugins: ${
-        plugins.filter((p) => p.insider).length
-      }`
-    );
+    if (process.env.MCP_QUIET !== "true") {
+      console.error(
+        `Loaded ${
+          plugins.length
+        } CapAwesome plugins from capawesome.io. Insider plugins: ${
+          plugins.filter((p) => p.insider).length
+        }`
+      );
+    }
 
     return plugins;
   } catch (error) {

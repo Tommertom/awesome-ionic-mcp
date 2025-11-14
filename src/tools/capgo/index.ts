@@ -1,6 +1,7 @@
 import { ServerTool } from "../../mcp-utils/tools.js";
 import { get_all_capgo_plugins } from "./get_all_capgo_plugins.js";
 import { get_capgo_plugin_api } from "./get_capgo_plugin_api.js";
+import { fetchGitHubAPI } from "../github-utils.js";
 
 export const capgo_plugins: ServerTool[] = [
   get_capgo_plugin_api,
@@ -29,15 +30,8 @@ export async function getAllCapGoRepos(): Promise<CapGoPlugin[]> {
 
   while (true) {
     const url = `${GITHUB_API}/orgs/${ORG_NAME}/repos?per_page=${perPage}&page=${page}`;
-    const res = await fetch(url, {
-      headers: {
-        Accept: "application/vnd.github+json",
-      },
-    });
+    const res = await fetchGitHubAPI(url);
 
-    if (!res.ok) {
-      throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
-    }
     const repos = await res.json();
     if (repos.length === 0) break;
 
@@ -67,7 +61,7 @@ export async function getAllCapGoRepos(): Promise<CapGoPlugin[]> {
         readmeContent = await readmeRes.text();
       }
     } catch (error) {
-      console.warn(`Failed to fetch README for ${repo.name}:`, error);
+      console.error(`Failed to fetch README for ${repo.name}:`, error);
     }
 
     if (readmeContent.length > 100) {
@@ -82,7 +76,9 @@ export async function getAllCapGoRepos(): Promise<CapGoPlugin[]> {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  console.log(`Loaded ${plugins.length} CapGo plugins from GitHub`);
+  if (process.env.MCP_QUIET !== "true") {
+    console.error(`Loaded ${plugins.length} CapGo plugins from GitHub`);
+  }
 
   return plugins;
 }

@@ -32,13 +32,15 @@ export const loadIonicCoreJSON = async () => {
   }
 
   // console log the stats
-  console.log(
-    `Loaded ${
-      Object.keys(ionic_component_map).length
-    } Core Ionic UI components from JSON. Ionic version: ${
-      downloadedData.version
-    }`
-  );
+  if (process.env.MCP_QUIET !== "true") {
+    console.error(
+      `Loaded ${
+        Object.keys(ionic_component_map).length
+      } Core Ionic UI components from JSON. Ionic version: ${
+        downloadedData.version
+      }`
+    );
+  }
 
   return {
     downloaded_data: downloadedData.coreJson,

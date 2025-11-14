@@ -86,13 +86,29 @@ export class IonicMCPServer {
   }
 
   async mcpData() {
-    return Promise.all([
+    const results = await Promise.allSettled([
       this.loadCoreJSON(),
       this.loadCoreCapAwesomeData(),
       this.loadCapacitorCommunityData(),
       this.loadCapGoData(),
       this.loadCoreCapacitorJSData(),
     ]);
+
+    results.forEach((result, index) => {
+      if (result.status === "rejected") {
+        const loaderNames = [
+          "CoreJSON",
+          "CapAwesome",
+          "CapacitorCommunity",
+          "CapGo",
+          "CapacitorJS",
+        ];
+        console.error(
+          `Failed to load ${loaderNames[index]} data:`,
+          result.reason
+        );
+      }
+    });
   }
 
   async loadCoreCapacitorJSData() {

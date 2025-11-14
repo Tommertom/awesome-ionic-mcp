@@ -9,7 +9,9 @@ if (!doTest) {
   mcpServer
     .start()
     .then(() => {
-      console.log("Ionic MCP Server is running");
+      if (process.env.MCP_QUIET !== "true") {
+        console.error("Ionic MCP Server is running");
+      }
     })
     .catch((error) => {
       console.error("Failed to start Ionic MCP Server:", error);

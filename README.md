@@ -76,6 +76,57 @@ To configure Cursor to use the Awesome Ionic MCP server, edit either the file `.
 }
 ```
 
+## Environment Variables
+
+The server supports optional environment variables for enhanced functionality:
+
+### `GITHUB_TOKEN` (Recommended)
+**Purpose:** Authenticate GitHub API requests to avoid rate limiting
+
+**Why it's needed:** The server fetches plugin data from GitHub organizations (CapGo, Capacitor Community). Without authentication, GitHub limits you to 60 API requests per hour per IP address. The server makes ~160+ API calls during initialization, which exhausts the unauthenticated limit in a single startup. With a token, the limit increases to 5,000 requests per hour.
+
+**How to get a token:**
+1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click "Generate new token (classic)"
+3. Give it a descriptive name (e.g., "Awesome Ionic MCP")
+4. No special scopes/permissions needed for public repository access
+5. Copy the generated token (starts with `ghp_`)
+
+**Configuration example:**
+```json
+{
+  "mcpServers": {
+    "awesome-ionic-mcp": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_your_token_here"
+      }
+    }
+  }
+}
+```
+
+### `MCP_QUIET`
+**Purpose:** Suppress informational logs (only errors will be shown)
+
+**When to use:** If you want minimal logging output
+
+**Configuration example:**
+```json
+{
+  "mcpServers": {
+    "awesome-ionic-mcp": {
+      "command": "npx",
+      "args": ["-y", "awesome-ionic-mcp@latest"],
+      "env": {
+        "MCP_QUIET": "true"
+      }
+    }
+  }
+}
+```
+
 ---
 
 #### Visual Studio Code Copilot
