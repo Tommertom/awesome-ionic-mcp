@@ -1,5 +1,5 @@
 # Awesome Ionic MCP server
-Your comprehensive Ionic coding companion powered by the Model Context Protocol (MCP). This intelligent server provides seamless access to Ionic Framework components, Capacitor plugins, and developer resources to accelerate your mobile app development workflow. Whether you're building cross-platform applications with React, Angular, Vue, or Vanilla JavaScript, this MCP server delivers real-time component definitions, API documentation, code examples, and plugin information directly to your AI assistant, enabling faster development and better code quality.
+Your comprehensive Ionic coding companion powered by the Model Context Protocol (MCP). This intelligent server provides seamless access to Ionic Framework components, Capacitor plugins, developer resources, and **CLI command execution** to accelerate your mobile app development workflow. Whether you're building cross-platform applications with React, Angular, Vue, or Vanilla JavaScript, this MCP server delivers real-time component definitions, API documentation, code examples, plugin information, and the ability to execute Ionic/Capacitor CLI commands directly to your AI assistant, enabling faster development and better code quality.
 
 Data is sourced from the package `@ionic/core`, ionicframework.com, docs-demo.ionic.io, capacitorjs.com, capawesome.io, capacitor-community, and capgo.live to ensure accuracy and completeness.
 
@@ -21,6 +21,98 @@ Data is sourced from the package `@ionic/core`, ionicframework.com, docs-demo.io
 | get_capgo_plugin_api | capgo | Retrieves API documentation for a specific CapGo plugin. |
 | get_all_capgo_plugins | capgo | Retrieves list of all CapGo plugins. |
 | get_all_capacitor_plugins | all-capacitor-plugins | Superlist of all Capacitor plugings from different publishers you can use to retrieve API information through this MCP tool. If you are lost about which plugin to use, this tool will help you find the right one. |
+| **ionic_info** | **ionic-cli** | **Get comprehensive project, system, and environment information** |
+| **ionic_config_get** | **ionic-cli** | **Read CLI or project configuration values** |
+| **ionic_config_set** | **ionic-cli** | **Set CLI or project configuration value** |
+| **ionic_config_unset** | **ionic-cli** | **Delete/unset configuration value** |
+| **ionic_start** | **ionic-cli** | **Create a new Ionic project** |
+| **ionic_start_list** | **ionic-cli** | **List available Ionic starter templates** |
+| **ionic_init** | **ionic-cli** | **Initialize existing project with Ionic** |
+| **ionic_build** | **ionic-cli** | **Build web assets for deployment** |
+| **ionic_serve** | **ionic-cli** | **Start local development server** |
+| **ionic_generate** | **ionic-cli** | **Generate pages, components, services** |
+| **ionic_repair** | **ionic-cli** | **Repair project dependencies** |
+| **integrations_list** | **ionic-cli** | **List project integrations** |
+| **integrations_enable** | **ionic-cli** | **Enable integration in project** |
+| **integrations_disable** | **ionic-cli** | **Disable integration in project** |
+| **capacitor_doctor** | **ionic-cli** | **Check Capacitor setup for errors** |
+| **capacitor_list_plugins** | **ionic-cli** | **List installed Capacitor plugins** |
+| **capacitor_sync** | **ionic-cli** | **Sync web assets and dependencies** |
+| **capacitor_copy** | **ionic-cli** | **Copy web assets to native platforms** |
+| **capacitor_update** | **ionic-cli** | **Update native dependencies** |
+| **capacitor_init** | **ionic-cli** | **Initialize Capacitor configuration** |
+| **capacitor_add** | **ionic-cli** | **Add native platform (iOS/Android)** |
+| **capacitor_build** | **ionic-cli** | **Build native platform release** |
+| **capacitor_run** | **ionic-cli** | **Run app on device/emulator** |
+| **capacitor_open** | **ionic-cli** | **Open native IDE** |
+| **capacitor_migrate** | **ionic-cli** | **Migrate to latest Capacitor version** |
+
+## CLI Tools
+The Awesome Ionic MCP server now includes **28 Ionic and Capacitor CLI tools** that allow you to execute commands directly through your AI assistant:
+
+### Project Information & Diagnostics
+- `ionic_info` - Get project, system, and environment information
+- `capacitor_doctor` - Check setup for configuration errors
+- `capacitor_list_plugins` - List all installed plugins
+- `ionic_config_get/set/unset` - Manage configuration values
+- `integrations_list` - List available integrations
+
+### Development Workflow
+- `ionic_build` - Build web assets with optimizations
+- `ionic_serve` - Start development server (manual launch recommended)
+- `capacitor_sync` - Sync web assets and update native dependencies
+- `capacitor_copy` - Copy web assets to native platforms
+- `capacitor_update` - Update native plugins
+
+### Code Generation
+- `ionic_generate` - Generate pages, components, services, guards, pipes
+- Framework-specific scaffolding for Angular, React, Vue
+
+### Project Setup & Management
+- `ionic_start` - Create new Ionic project
+- `ionic_start_list` - List available templates
+- `ionic_init` - Initialize existing project with Ionic
+- `capacitor_init` - Initialize Capacitor configuration
+- `capacitor_add` - Add iOS or Android platform
+- `integrations_enable/disable` - Manage project integrations
+
+### Native Development
+- `capacitor_build` - Build native app release
+- `capacitor_run` - Run on device or emulator
+- `capacitor_open` - Open Xcode or Android Studio
+- `capacitor_migrate` - Migrate to latest Capacitor version
+
+### Maintenance
+- `ionic_repair` - Fix dependencies and regenerate files
+
+### Common Workflows
+
+**Create a new project:**
+```typescript
+// 1. Create project
+ionic_start({ name: "MyApp", template: "tabs", type: "react", capacitor: true })
+
+// 2. Add iOS platform
+capacitor_add({ project_directory: "./MyApp", platform: "ios" })
+
+// 3. Build and sync
+ionic_build({ project_directory: "./MyApp", prod: true })
+capacitor_sync({ project_directory: "./MyApp", platform: "ios" })
+```
+
+**Check project health:**
+```typescript
+ionic_info({ format: "json" })
+capacitor_doctor({ platform: "ios" })
+capacitor_list_plugins({})
+```
+
+**Generate components:**
+```typescript
+ionic_generate({ type: "page", name: "home" })
+ionic_generate({ type: "component", name: "user-card" })
+ionic_generate({ type: "service", name: "auth" })
+```
 
 ## Getting started & upfront warning
 The Awesome Ionic MCP server can work with any MCP client that supports standard I/O (stdio) as the transport medium. Here are specific instructions for some popular tools:

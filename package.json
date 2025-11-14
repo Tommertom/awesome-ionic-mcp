@@ -19,8 +19,12 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
+    "execa": "^9.6.0",
+    "find-up": "^8.0.0",
     "js-yaml": "^4.1.0",
-    "puppeteer": "^24.9.0"
+    "puppeteer": "^24.9.0",
+    "strip-ansi": "^7.1.2",
+    "tree-kill": "^1.2.2"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
