@@ -61,3 +61,4 @@ coverage/
 # Optional PM2 logs
 pids
 logs
+core
