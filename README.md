@@ -189,11 +189,19 @@ The server supports optional environment variables for enhanced functionality:
 {
   "mcpServers": {
     "awesome-ionic-mcp": {
+      "type": "stdio"
       "command": "npx",
       "args": ["-y", "awesome-ionic-mcp@latest"],
       "env": {
         "GITHUB_TOKEN": "ghp_your_token_here"
-      }
+      },
+       "alwaysAllow": [
+      "get_ionic_component_definition",
+      "get_all_ionic_components",
+      "get_component_api",
+      "get_all_official_plugins",
+      "get_official_plugin_api"
+    ],
     }
   }
 }
